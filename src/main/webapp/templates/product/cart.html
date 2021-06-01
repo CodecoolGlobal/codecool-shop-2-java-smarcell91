@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script src="/static/js/cart.js" defer></script>
+</head>
+<body>
+    <div>
+        <h1>Cart</h1>
+    </div>
+    <div class="card">
+        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart.keySet()}">
+            <div class="productcard">
+                <img height="100" width="100" class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <div class="info">
+                    <h4 th:text="${prod.name}">Product name</h4>
+                    <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                </div>
+                <div class="adjust">
+                    <div class="btn btn-success increment" th:id="${prod.getId()}">+</div>
+                    <div class="btn btn-success decrement" th:id="${prod.getId()}">-</div>
+                    <div class="btn btn-success remove" th:id="${prod.getId()}">Remove</div>
+                </div>
+                <div class="amount">
+                    <h3 th:text="${cart.get(prod)}"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
