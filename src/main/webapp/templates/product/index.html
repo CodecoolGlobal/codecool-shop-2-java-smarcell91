@@ -38,10 +38,14 @@
     <div class="card">
         <form action="/">
             <select name="selectCategory" onchange="this.form.submit();">
-                <option th:each="categ,iterStat : ${categories}" th:text="${categ.getName()}" th:value="${categ.getId()}"></option>
+                <option th:value="${categories.size()+1}"  th:selected="${categories.size()+1} == ${category.id}">All</option>
+                <option th:each="categ,iterStat : ${categories}"
+                        th:text="${categ.getName()}"
+                        th:value="${categ.getId()}"
+                        th:selected="${categ.id} == ${category.id}"></option>
             </select>
         </form>
-<!--        <strong th:text="${category.name}">Category Title</strong>-->
+<!--        <strong th:if="${category != null}" th:text="${category.name}">Category Title</strong>-->
     </div>
 
     <div id="products" class="row">

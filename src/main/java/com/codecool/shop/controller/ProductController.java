@@ -32,11 +32,14 @@ public class ProductController extends HttpServlet {
 
         String selectedCategory = req.getParameter("selectCategory");
         System.out.println(selectedCategory);
-        if (selectedCategory == null) {
-            context.setVariable("category", productService.getProductCategory(1));
-            context.setVariable("products", productService.getProductsForCategory(1));
+        if (selectedCategory == null || Integer.parseInt(selectedCategory) == productCategoryDataStore.getAll().size()+1) {
+            Map<String, Integer> category = new HashMap<>();
+            category.put("id", productCategoryDataStore.getAll().size()+1);
+            context.setVariable("category", category);
+            context.setVariable("products", productDataStore.getAll());
             context.setVariable("categories", productCategoryDataStore.getAll());
         }
+
         else {
             int categoryId = Integer.parseInt(selectedCategory);
             context.setVariable("category", productService.getProductCategory(categoryId));

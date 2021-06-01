@@ -29,6 +29,7 @@ public class Initializer implements ServletContextListener {
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
 
+
         Supplier hp = new Supplier("HP", "Computers");
         supplierDataStore.add(lenovo);
         Supplier samsung = new Supplier("samsung", "mobil");
