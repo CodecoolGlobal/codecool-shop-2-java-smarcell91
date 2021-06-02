@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CartDaoMem implements CartDao {
     
@@ -19,6 +20,14 @@ public class CartDaoMem implements CartDao {
             instance = new CartDaoMem();
         }
         return instance;
+    }
+
+    public float getPriceSum() {
+        float maxSum = 0;
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            maxSum += entry.getKey().getDefaultPrice() * entry.getValue();
+        }
+        return maxSum;
     }
 
     @Override
