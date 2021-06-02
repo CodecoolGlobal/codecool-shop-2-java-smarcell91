@@ -27,10 +27,15 @@
     <script src="/static/js/cart.js" defer></script>
 </head>
 <body>
-    <div>
+    <div class="jumbotron text-center header">
+        <h1>DaniExpress</h1>
+    </div>
+    <div class="cart">
         <h1>Cart</h1>
+        <a class="btn btn-success checkout" href="/checkout">Checkout</a>
     </div>
     <div class="card">
+        <form>
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart.keySet()}">
             <div class="productcard">
                 <img height="100" width="100" class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
@@ -43,11 +48,12 @@
                     <div class="btn btn-success decrement" th:id="${prod.getId()}">-</div>
                     <div class="btn btn-success remove" th:id="${prod.getId()}">Remove</div>
                 </div>
-                <div class="amount">
-                    <h3 th:text="${cart.get(prod)}"></h3>
+                <div class="amount" th:id="${prod.getId()} + ' amount'">
+                    <input type="text" th:value="${cart.get(prod)}">
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </body>
 </html>
