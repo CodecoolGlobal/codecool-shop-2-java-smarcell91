@@ -60,3 +60,48 @@
 {
     margin: 0 0 11px;
 }
+
+#cart 
+{
+    float: right;
+}
+
+.productcard 
+{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.info
+{
+    float: right;
+    margin-left: 15px;
+}
+
+.adjust
+{
+    margin-top: 15px;
+    margin-left: 100px;
+}
+
+.amount
+{
+    margin: 15px;
+    margin-top: 25px;
+}
+
+.cart
+{
+    background-color: lightgreen;
+    text-align: center;
+}
+
+.header
+{
+    margin: 0px;
+}
+
+.checkout
+{
+    float: right;
+}

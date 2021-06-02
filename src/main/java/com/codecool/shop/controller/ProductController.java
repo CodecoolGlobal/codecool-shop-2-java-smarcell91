@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.service.ProductService;
@@ -24,6 +25,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
+        CartDaoMem cartDaoMem = CartDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
 
@@ -31,7 +33,6 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         String selectedCategory = req.getParameter("selectCategory");
-        System.out.println(selectedCategory);
         if (selectedCategory == null) {
             context.setVariable("category", productService.getProductCategory(1));
             context.setVariable("products", productService.getProductsForCategory(1));
@@ -43,6 +44,8 @@ public class ProductController extends HttpServlet {
             context.setVariable("products", productService.getProductsForCategory(categoryId));
             context.setVariable("categories", productCategoryDataStore.getAll());
         }
+        var cart = cartDaoMem.getCart();
+        context.setVariable("cartsize", cart.size());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
