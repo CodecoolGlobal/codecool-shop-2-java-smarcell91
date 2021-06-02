@@ -33,15 +33,29 @@ function incrementAmount(id) {
     fetch(`cart/add?id=${id}`, {
         method: "GET"
     })
-    document.querySelector(".amount").innerHTML = `<h3> ${parseInt(document.querySelector(".amount").innerText) + 1} </h3>`
+    const children = document.getElementById(`${id} amount`).childNodes;
+    let counter = 0;
+    for (let i = 0; i < children.length; i++) {
+        if (children[i].nodeName == "INPUT") {
+            counter = i;
+        }
+    }
+    document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) + 1}">`
 }
 
 function decrementAmount(id) {
     fetch(`cart/decrement?id=${id}`, {
         method: "GET"
     })
-    if (parseInt(document.querySelector(".amount").innerText) > 1) {
-    document.querySelector(".amount").innerHTML = `<h3> ${parseInt(document.querySelector(".amount").innerText) - 1} </h3>`} else {removeProduct(id)}
+    const children = document.getElementById(`${id} amount`).childNodes;
+    let counter = 0;
+    for (let i = 0; i < children.length; i++) {
+        if (children[i].nodeName == "INPUT") {
+            counter = i;
+        }
+    }
+    if (parseInt(children[counter].value) > 1) {
+    document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) - 1}">`} else {removeProduct(id)}
 }
 
 function removeProduct(id) {
