@@ -44,19 +44,19 @@
             <form action="/" class="formStyle">
     <!--            onchange="this.form.submit();-->
                 <select name="selectedCategory" id="selectedCategory" onchange="this.form.submit();">
-                    <option th:value="${categories.size()+1}" th:selected="${categories.size()+1} == ${category.id}">All</option>
+                    <option value="All" th:selected="${categories.size()+1} == ${category.id}">All category</option>
                     <option th:each="categ,iterStat : ${categories}"
                             th:text="${categ.name}"
-                            th:value="${categ.id}"
+                            th:value="${categ.name}"
                             th:selected="${categ.id} == ${category.id}"></option>
                 </select>
             </form>
             <form action="/" class="formStyle">
                 <select name="selectedSupplier" id="selectSupplier" onchange="this.form.submit();">
-                    <option th:value="${suppliers.size()+1}" th:selected="${suppliers.size()+1} == ${supplier.id}">All</option>
+                    <option value="All" th:selected="${suppliers.size()+1} == ${supplier.id}">All supplier</option>
                     <option th:each="supp,iterStat : ${suppliers}"
                             th:text="${supp.name}"
-                            th:value="${supp.id}"
+                            th:value="${supp.name}"
                             th:selected="${supp.id} == ${supplier.id}"></option>
                 </select>
             </form>

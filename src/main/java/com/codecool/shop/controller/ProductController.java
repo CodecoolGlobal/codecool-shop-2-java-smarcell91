@@ -7,6 +7,7 @@ import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -38,6 +40,27 @@ public class ProductController extends HttpServlet {
 
         String selectedCategory = req.getParameter("selectedCategory");
         String selectedSupplier = req.getParameter("selectedSupplier");
+
+        if (selectedCategory != null && !Objects.equals(selectedCategory, "All")) {
+            for (ProductCategory category: productCategoryDataStore.getAll()) {
+                if (category.getName().equals(selectedCategory)) {
+                    selectedCategory = String.valueOf(category.getId());
+                }
+            }
+        }
+        else if (Objects.equals(selectedCategory, "All")) {
+            selectedCategory = String.valueOf(productCategoryDataStore.getAll().size()+1);
+        }
+        else if (selectedSupplier != null && !Objects.equals(selectedSupplier, "All")) {
+            for (Supplier supplier: supplierDataStore.getAll()) {
+                if (supplier.getName().equals(selectedSupplier)) {
+                    selectedSupplier = String.valueOf(supplier.getId());
+                }
+            }
+        }
+        else if (Objects.equals(selectedSupplier, "All")) {
+            selectedSupplier = String.valueOf(supplierDataStore.getAll().size()+1);
+        }
 
         if (selectedCategory == null && selectedSupplier == null){
             Map<String, Integer> category = new HashMap<>();
