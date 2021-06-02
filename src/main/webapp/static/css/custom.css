@@ -110,6 +110,12 @@
     float: right;
 }
 
-#billingData {
+#paypal {
     visibility: hidden;
 }
+
+#creditCard {
+    visibility: hidden;
+}
+
+

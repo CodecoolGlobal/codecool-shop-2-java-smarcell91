@@ -38,8 +38,6 @@ public class ProductController extends HttpServlet {
 
         String selectedCategory = req.getParameter("selectedCategory");
         String selectedSupplier = req.getParameter("selectedSupplier");
-        System.out.println("category " + selectedCategory);
-        System.out.println("supplier " + selectedSupplier);
 
         if (selectedCategory == null && selectedSupplier == null){
             Map<String, Integer> category = new HashMap<>();

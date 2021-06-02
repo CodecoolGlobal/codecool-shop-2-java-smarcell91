@@ -24,43 +24,42 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
-    <script type="text/javascript" src="/static/js/cart.js" defer></script>
+    <script type="text/javascript" src="/static/js/checkout.js" defer></script>
 </head>
 <body>
 <div class="jumbotron text-center header">
     <h1>DaniExpress</h1>
 </div>
 <div class="cart">
-    <h1>Cart</h1>
-    <a class="btn btn-success checkout" href="/checkout">Checkout</a>
+    <h1>Shipping Infos</h1>
 </div>
 <div class="card">
-    <form>
+    <form action="/checkout" method="post">
         <div id="personalData">
             <label for="firstName">First name:</label>
-            <input type="text" name="firstName" id="firstName">
+            <input type="text" name="firstName" id="firstName" required pattern="\S+"/>
             <label for="lastName">Last name:</label>
-            <input type="text" name="lastName" id="lastName">
+            <input type="text" name="lastName" id="lastName" required pattern="\S+"/>
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email">
+            <input type="email" name="email" id="email" required pattern="\S+"/>
             <label for="phonenum">Phone number</label>
-            <input type="number" name="phonenum" id="phonenum">
+            <input type="text" name="phonenum" id="phonenum" required>
         </div>
         <div id="shippingData">
             <h3>Shipping</h3>
             <label for="shippingCountry">Country</label>
-            <input type="text" name="shippingCountry" id="shippingCountry">
+            <input type="text" name="shippingCountry" id="shippingCountry" required pattern="\S+"/>
             <label for="shippingCity">City</label>
-            <input type="text" name="shippingCity" id="shippingCity">
-            <label for="shippingCity">Zipcode</label>
-            <input type="text" name="shippingZipcode" id="shippingZipcode">
+            <input type="text" name="shippingCity" id="shippingCity" required pattern="\S+"/>
+            <label for="shippingZipcode">Zipcode</label>
+            <input type="text" name="shippingZipcode" id="shippingZipcode" required>
             <label for="shippingAddress">Address</label>
-            <input type="text" name="shippingAddress" id="shippingAddress">
+            <input type="text" name="shippingAddress" id="shippingAddress" required pattern="\S+"/>>
             <label for="sameAddress">Billing address is same as the shipping address!</label>
             <input type="checkbox" name="sameAddress" id="sameAddress">
         </div>
         <div id="billingData">
-            <h3>Shipping</h3>
+            <h3>Billing</h3>
             <label for="billingCountry">Country</label>
             <input type="text" name="billingCountry" id="billingCountry">
             <label for="billingCity">City</label>
@@ -70,7 +69,7 @@
             <label for="billingAddress">Address</label>
             <input type="text" name="billingAddress" id="billingAddress">
         </div>
-        <button type="submit">Buy</button>
+        <button type="submit" id="submitCheckout">Go to Payment</button>
     </form>
 </div>
 </body>
