@@ -26,12 +26,17 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script src="/static/js/cart.js" defer></script>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+<div class="jumbotron text-center header">
+    <h1>DaniExpress</h1>
+</div>
+
+<div class="cart">
+    <a class="btn btn-success" id="cart" href="/cart">Cart</a>
 </div>
 
 <div class="container">
@@ -71,7 +76,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add-to-cart" th:id="${prod.getId()}" href="#">Add to cart</a>
                     </div>
                 </div>
             </div>
