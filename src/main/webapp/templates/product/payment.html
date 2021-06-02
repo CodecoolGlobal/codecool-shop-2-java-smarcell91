@@ -35,9 +35,17 @@
     <a class="btn btn-success checkout" href="/checkout">Checkout</a>
 </div>
 <div class="card">
-    <div id="allProductPrise">
-
+    <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
+        <div class="info">
+            <h4 th:text="${prod.name}">Product name</h4>
+            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+        </div>
     </div>
+    <hr>
+    <div id="totalPrice">
+        <h3>Total price: <span th:text="${priceSum}"></span> USD</h3>
+    </div>
+    <hr>
     <form action="/payment" method="post">
         <label for="payPalCheckbox">Pay with PayPal</label>
         <input type="checkbox" name="payPalCheckbox" id="payPalCheckbox">

@@ -36,15 +36,10 @@ public class PaymentController extends HttpServlet {
         String cardCode = req.getParameter("cardCode");
         String payPalCheckbox = req.getParameter("payPalCheckbox");
         String cardCheckbox = req.getParameter("cardCheckbox");
-        System.out.println(payPalCheckbox);
-        System.out.println(cardCheckbox);
-        System.out.println("PPPW:" + payPalPW);
-        System.out.println("PPUN:" + payPalUserName);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("cart", cartDataStore.getCart());
 
         if (Objects.equals(payPalCheckbox, "on") && cardCheckbox == null &&
                 payPalUserName != null && payPalPW != null) {
@@ -52,9 +47,7 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("payPalUserName", payPalUserName);
             paymentInfo.put("payPalPW", payPalPW);
             orderDataStore.addPayment(paymentInfo);
-            System.out.println("shipping:" + orderDataStore.getShipping());
-            System.out.println("cart:" + orderDataStore.getCart().getCart());
-            System.out.println("paymentPP:" + orderDataStore.getPayment());
+            orderDataStore.toJSON();
             resp.sendRedirect("/");
         }
         else if (Objects.equals(cardCheckbox, "on") && payPalCheckbox == null &&
@@ -66,12 +59,12 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("expiryDate", expiryDate);
             paymentInfo.put("cardCode", cardCode);
             orderDataStore.addPayment(paymentInfo);
-            System.out.println("shipping:" + orderDataStore.getShipping());
-            System.out.println("cart:" + orderDataStore.getCart().getCart());
-            System.out.println("paymentCC:" + orderDataStore.getPayment());
+            orderDataStore.toJSON();
             resp.sendRedirect("/");
         }
         else {
+            context.setVariable("priceSum", cartDataStore.getPriceSum());
+            context.setVariable("cart", cartDataStore.getCart());
             engine.process("product/payment.html", context, resp.getWriter());
         }
     }
