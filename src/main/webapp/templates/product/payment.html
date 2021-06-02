@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script type="text/javascript" src="/static/js/payment.js" defer></script>
+</head>
+<body>
+<div class="jumbotron text-center header">
+    <h1>DaniExpress</h1>
+</div>
+<div class="cart">
+    <h1>Payment</h1>
+    <a class="btn btn-success checkout" href="/checkout">Checkout</a>
+</div>
+<div class="card">
+    <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
+        <div class="info">
+            <h4 th:text="${prod.name}">Product name</h4>
+            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+        </div>
+    </div>
+    <hr>
+    <div id="totalPrice">
+        <h3>Total price: <span th:text="${priceSum}"></span> USD</h3>
+    </div>
+    <hr>
+    <form action="/payment" method="post">
+        <label for="payPalCheckbox">Pay with PayPal</label>
+        <input type="checkbox" name="payPalCheckbox" id="payPalCheckbox">
+        <label for="cardCheckbox">Pay with Credit card</label>
+        <input type="checkbox" name="cardCheckbox" id="cardCheckbox">
+        <div id="paypal">
+            <h3>Pay Pal</h3>
+            <label for="payPalUsername">Pay Pal username</label>
+            <input type="text" name="payPalUsername" id="payPalUsername">
+            <label for="payPalPW">Pay Pal password</label>
+            <input type="password" name="payPalPW" id="payPalPW">
+        </div>
+        <div id="creditCard">
+            <h3>Credit card</h3>
+            <label for="cardNumber">Card number</label>
+            <input type="text" name="cardNumber" id="cardNumber">
+            <label for="cardHolder">Card holder</label>
+            <input type="text" name="cardHolder" id="cardHolder">
+            <label for="expiryDate">Expiry date</label>
+            <input type="text" name="expiryDate" id="expiryDate">
+            <label for="cardCode">Code</label>
+            <input type="text" name="cardCode" id="cardCode">
+        </div>
+        <button type="submit" id="submitCheckout">Go to Payment</button>
+    </form>
+</div>
+</body>
+</html>

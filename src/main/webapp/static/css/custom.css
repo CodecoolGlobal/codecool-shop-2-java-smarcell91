@@ -62,7 +62,6 @@
 }
 
 .card {
-    overflow: hidden;
 }
 
 #cart 
@@ -109,3 +108,17 @@
 {
     float: right;
 }
+
+#paypal {
+    visibility: hidden;
+}
+
+#creditCard {
+    visibility: hidden;
+}
+
+#allProductPrise {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
