@@ -61,6 +61,10 @@
     margin: 0 0 11px;
 }
 
+.card {
+    overflow: hidden;
+}
+
 #cart 
 {
     float: right;

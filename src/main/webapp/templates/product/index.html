@@ -41,12 +41,26 @@
 
 <div class="container">
     <div class="card">
-        <form action="/">
-            <select name="selectCategory" onchange="this.form.submit();">
-                <option th:each="categ,iterStat : ${categories}" th:text="${categ.getName()}" th:value="${categ.getId()}"></option>
-            </select>
-        </form>
-<!--        <strong th:text="${category.name}">Category Title</strong>-->
+            <form action="/" class="formStyle">
+    <!--            onchange="this.form.submit();-->
+                <select name="selectedCategory" id="selectedCategory" onchange="this.form.submit();">
+                    <option th:value="${categories.size()+1}" th:selected="${categories.size()+1} == ${category.id}">All</option>
+                    <option th:each="categ,iterStat : ${categories}"
+                            th:text="${categ.name}"
+                            th:value="${categ.id}"
+                            th:selected="${categ.id} == ${category.id}"></option>
+                </select>
+            </form>
+            <form action="/" class="formStyle">
+                <select name="selectedSupplier" id="selectSupplier" onchange="this.form.submit();">
+                    <option th:value="${suppliers.size()+1}" th:selected="${suppliers.size()+1} == ${supplier.id}">All</option>
+                    <option th:each="supp,iterStat : ${suppliers}"
+                            th:text="${supp.name}"
+                            th:value="${supp.id}"
+                            th:selected="${supp.id} == ${supplier.id}"></option>
+                </select>
+            </form>
+        <strong th:if="${category != null}" th:text="${category.name}">Category Title</strong>
     </div>
 
     <div id="products" class="row">
