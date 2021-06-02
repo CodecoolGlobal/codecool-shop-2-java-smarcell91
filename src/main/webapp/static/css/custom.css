@@ -60,3 +60,15 @@
 {
     margin: 0 0 11px;
 }
+
+.card {
+    overflow: hidden;
+}
+
+.formStyle {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+
+
