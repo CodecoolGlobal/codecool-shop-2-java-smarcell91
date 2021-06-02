@@ -89,3 +89,19 @@
     margin: 15px;
     margin-top: 25px;
 }
+
+.cart
+{
+    background-color: lightgreen;
+    text-align: center;
+}
+
+.header
+{
+    margin: 0px;
+}
+
+.checkout
+{
+    float: right;
+}
