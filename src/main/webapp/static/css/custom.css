@@ -62,7 +62,6 @@
 }
 
 .card {
-    overflow: hidden;
 }
 
 #cart 
@@ -118,4 +117,8 @@
     visibility: hidden;
 }
 
+#allProductPrise {
+    display: flex;
+    flex-wrap: nowrap;
+}
 
