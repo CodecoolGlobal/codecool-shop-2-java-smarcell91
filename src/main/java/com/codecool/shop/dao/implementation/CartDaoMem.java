@@ -86,4 +86,13 @@ public class CartDaoMem implements CartDao {
         }
         return products;
     }
+
+    @Override
+    public int getCartSize() {
+        int size = 0;
+        for (int value : cart.values()) {
+            size += Integer.valueOf(value);
+        }
+        return size;
+    }
 }
