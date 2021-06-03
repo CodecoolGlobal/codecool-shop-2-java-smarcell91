@@ -27,51 +27,84 @@
     <script type="text/javascript" src="/static/js/checkout.js" defer></script>
 </head>
 <body>
-<div class="jumbotron text-center header">
-    <h1>DaniExpress</h1>
+<div class="headerDiv">
+</div>
+<div>
+    <a class="toPageBtn cartBtn" href="/cart">Cart</a>
 </div>
 <div class="cart">
-    <h1>Shipping Infos</h1>
-    <a class="btn btn-success cartback" href="/cart">Cart</a>
+    <h1 class="pageTitle">Shipping Infos</h1>
 </div>
 <div class="card">
-    <form action="/checkout" method="post">
-        <div id="personalData">
-            <label for="firstName">First name:</label>
-            <input type="text" name="firstName" id="firstName" autocomplete="off" required>
-            <label for="lastName">Last name:</label>
-            <input type="text" name="lastName" id="lastName" autocomplete="off" required>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>
-            <label for="phonenum">Phone number</label>
-            <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>
-        </div>
-        <div id="shippingData">
-            <h3>Shipping</h3>
-            <label for="shippingCountry">Country</label>
-            <input type="text" name="shippingCountry" id="shippingCountry" autocomplete="off" required>
-            <label for="shippingCity">City</label>
-            <input type="text" name="shippingCity" id="shippingCity" autocomplete="off" required>
-            <label for="shippingZipcode">Zipcode</label>
-            <input type="text" name="shippingZipcode" id="shippingZipcode" autocomplete="off" required>
-            <label for="shippingAddress">Address</label>
-            <input type="text" name="shippingAddress" id="shippingAddress" autocomplete="off" required>
-            <label for="sameAddress">Billing address is same as the shipping address!</label>
-            <input type="checkbox" name="sameAddress" id="sameAddress">
-        </div>
-        <div id="billingData">
-            <h3>Billing</h3>
-            <label for="billingCountry">Country</label>
-            <input type="text" name="billingCountry" id="billingCountry" autocomplete="off">
-            <label for="billingCity">City</label>
-            <input type="text" name="billingCity" id="billingCity" autocomplete="off">
-            <label for="billingCity">Zipcode</label>
-            <input type="text" name="billingZipcode" id="billingZipcode" autocomplete="off">
-            <label for="billingAddress">Address</label>
-            <input type="text" name="billingAddress" id="billingAddress" autocomplete="off">
-        </div>
-        <button type="submit" id="submitCheckout">Go to Payment</button>
-    </form>
+    <div class="formDiv">
+        <form action="/checkout" method="post">
+            <div id="personalData">
+                <h3 class="topicTitle">Personal</h3>
+                <div class="inputFields">
+                    <label for="firstName">First name:</label><br>
+                    <input type="text" name="firstName" id="firstName" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="lastName">Last name:</label><br>
+                    <input type="text" name="lastName" id="lastName" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="email">Email:</label><br>
+                    <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>
+                </div>
+                <div class="inputFields">
+                    <label for="phonenum">Phone number</label><br>
+                    <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>
+                </div>
+            </div>
+            <div id="shippingData">
+                <hr>
+                <h3 class="topicTitle">Shipping address</h3>
+                <div class="inputFields">
+                    <label for="shippingCountry">Country</label><br>
+                    <input type="text" name="shippingCountry" id="shippingCountry" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingCity">City</label><br>
+                    <input type="text" name="shippingCity" id="shippingCity" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingZipcode">Zipcode</label><br>
+                    <input type="text" name="shippingZipcode" id="shippingZipcode" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingAddress">Address</label><br>
+                    <input type="text" name="shippingAddress" id="shippingAddress" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <input type="checkbox" name="sameAddress" id="sameAddress">
+                    <h5>Billing address is same as the shipping address!</h5>
+<!--                    <label for="sameAddress">Billing address is same as the shipping address!</label>-->
+                </div>
+            </div>
+            <div id="billingData">
+                <hr>
+                <h3 class="topicTitle">Billing address</h3>
+                <div class="inputFields">
+                    <label for="billingCountry">Country</label><br>
+                    <input type="text" name="billingCountry" id="billingCountry" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingCity">City</label><br>
+                    <input type="text" name="billingCity" id="billingCity" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingCity">Zipcode</label><br>
+                    <input type="text" name="billingZipcode" id="billingZipcode" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingAddress">Address</label><br>
+                    <input type="text" name="billingAddress" id="billingAddress" autocomplete="off">
+                </div>
+            </div>
+            <button class="sendBtn" type="submit" id="submitCheckout">Go to Payment</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
