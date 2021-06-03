@@ -24,36 +24,46 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
-
-
-        Supplier hp = new Supplier("HP", "Computers");
-        supplierDataStore.add(hp);
-        Supplier samsung = new Supplier("samsung", "mobil");
-        supplierDataStore.add(samsung);
+        Supplier nike = new Supplier("Nike", "Clotes");
+        supplierDataStore.add(nike);
+        Supplier adidas = new Supplier("Adidas", "Clotes");
+        supplierDataStore.add(adidas);
+        Supplier drink = new Supplier("Drink", "Drink");
+        supplierDataStore.add(drink);
+        Supplier foods = new Supplier("Food", "Food");
+        supplierDataStore.add(foods);
+        Supplier other = new Supplier("Other", "Others");
+        supplierDataStore.add(other);
+        Supplier sony = new Supplier("Sony", "Sony and similar");
+        supplierDataStore.add(sony);
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
-
-        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "Portable computer");
-        productCategoryDataStore.add(laptop);
-        ProductCategory mobil = new ProductCategory("Mobil", "Mobil phone", "Mobil phones and tablets");
-        productCategoryDataStore.add(mobil);
+        ProductCategory clotes = new ProductCategory("Clotes", "wear", "Jumpers, T-shirts, Slippers, Shoes, ...");
+        productCategoryDataStore.add(clotes);
+        ProductCategory game = new ProductCategory("Games", "Hardware", "Electronic games and figures");
+        productCategoryDataStore.add(game);
+        ProductCategory food = new ProductCategory("Foods", "Foods", "Foods, drinks and candies");
+        productCategoryDataStore.add(food);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
-
-        productDataStore.add(new Product("HP laptop", 220, "USD", "HP's best laptop.", laptop, hp));
-        productDataStore.add(new Product("HP mobil", 220, "USD", "HP's best phone.", mobil, hp));
-        productDataStore.add(new Product("Samsung xyz mobil", 130, "USD", "Samsung's best phone.", mobil, samsung));
-        productDataStore.add(new Product("Samsung laptop", 250, "USD", "Samsung's best laptop.", laptop, samsung));
-        productDataStore.add(new Product("Samsung tablet", 250, "USD", "Samsung's best tablet.", tablet, samsung));
-        productDataStore.add(new Product("Amazon superPhone", 250, "USD", "Amazon's best phone.", mobil, amazon));
+        productDataStore.add(new Product("Mike Shoes", 49.9f, "USD", "Fantastic price. Best Mike shoe.", clotes, nike));
+        productDataStore.add(new Product("Hike Slippers", 23, "USD", "Best slippers for summer", clotes, nike));
+        productDataStore.add(new Product("Kine Slippers", 38, "USD", "Best new Slippers", clotes, nike));
+        productDataStore.add(new Product("Nake jumper", 42, "USD", "Best jumper today", clotes, nike));
+        productDataStore.add(new Product("Adcids sport bag", 48, "USD", "Best bag for you", clotes, adidas));
+        productDataStore.add(new Product("Adidona soccer shoes", 98, "USD", "Best shoes for soccer", clotes, adidas));
+        productDataStore.add(new Product("Johnnie Worker whiskey", 18, "USD", "Original whiskey", food, drink));
+        productDataStore.add(new Product("Heimekem beer", 6, "USD", "Best beer", food, drink));
+        productDataStore.add(new Product("Olmeo", 3, "USD", "Best biscuit", food, foods));
+        productDataStore.add(new Product("Kic Ker", 2, "USD", "Best chocolate", food, foods));
+        productDataStore.add(new Product("Poly Station", 76, "USD", "Best console", game, sony));
+        productDataStore.add(new Product("FTZA cap", 21, "USD", "Best cap in the world", clotes, other));
+        productDataStore.add(new Product("Avangers game", 17, "USD", "Best avangers game", game, other));
+        productDataStore.add(new Product("SQMY controller", 35, "USD", "sqmy controller", game, sony));
+        productDataStore.add(new Product("Pop Station", 116, "USD", "best portable game", game, sony));
+        productDataStore.add(new Product("Nokla phone", 64, "USD", "Best phone in the world", game, other));
+        productDataStore.add(new Product("Harry Potter bag", 23, "USD", "Nice bag for kids", clotes, other));
+        productDataStore.add(new Product("Game Child", 49, "USD", "Nice game for kids", game, other));
+        productDataStore.add(new Product("Special man", 24, "USD", "Nice game for kids", game, other));
     }
 }
