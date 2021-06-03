@@ -104,6 +104,16 @@
     margin: 0px;
 }
 
+.cartback
+{
+    float: right;
+}
+
+.index
+{
+    float: left;
+}
+
 .checkout
 {
     float: right;
