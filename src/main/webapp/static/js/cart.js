@@ -1,5 +1,6 @@
 initializeButtons();
 fetchProducts();
+showTotal();
 
 function initializeButtons() {
     const addButtons = document.querySelectorAll(".add-to-cart");
@@ -29,6 +30,23 @@ async function addToCart(id) {
         method: "GET"
     })
     fetchProducts();
+    showTotal();
+}
+
+function showTotal() {
+    const prices = document.querySelectorAll(".lead");
+    const total = document.querySelector(".total");
+    const amounts = document.querySelectorAll("input");
+    let totalPrice = 0;
+    if (total != null) {
+        total.innerHTML = "";
+        for (let i = 0; i < prices.length; i++) {
+            totalPrice += parseInt(prices[i].innerText.split(" ")[0]) * amounts[i].value;
+        }
+        let h2 = document.createElement("h2");
+        h2.innerText = "Total price: " + totalPrice + " USD";
+        total.appendChild(h2);
+    }
 }
 
 function fetchProducts() {
@@ -59,6 +77,7 @@ function incrementAmount(id) {
         }
     }
     document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) + 1}">`
+    showTotal();
 }
 
 function decrementAmount(id) {
@@ -74,6 +93,7 @@ function decrementAmount(id) {
     }
     if (parseInt(children[counter].value) > 1) {
     document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) - 1}">`} else {removeProduct(id)}
+    showTotal();
 }
 
 function removeProduct(id) {
@@ -81,4 +101,5 @@ function removeProduct(id) {
         method: "GET"
     })
     location.reload();
+    showTotal();
 }
