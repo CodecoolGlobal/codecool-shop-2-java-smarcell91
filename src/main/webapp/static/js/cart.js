@@ -1,4 +1,5 @@
 initializeButtons();
+fetchProducts();
 
 function initializeButtons() {
     const addButtons = document.querySelectorAll(".add-to-cart");
@@ -23,10 +24,27 @@ function initializeButtons() {
     }
 }
 
-function addToCart(id) {
-    fetch(`cart/add?id=${id}`, {
+async function addToCart(id) {
+    await fetch(`cart/add?id=${id}`, {
         method: "GET"
     })
+    fetchProducts();
+}
+
+function fetchProducts() {
+    fetch("fetchitems")
+        .then((response) => response.json())
+        .then((data) => {
+            const productList = document.querySelector(".cartitems");
+            if (productList != null) {
+                productList.innerHTML = "";
+                for (let i = 0; i < data.length; i++) {
+                    const option = document.createElement("option");
+                    option.innerText = data[i];
+                    productList.appendChild(option);
+                }
+            }
+        })
 }
 
 function incrementAmount(id) {
