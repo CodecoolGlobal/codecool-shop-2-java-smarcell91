@@ -63,6 +63,7 @@ public class PaymentController extends HttpServlet {
             resp.sendRedirect("/");
         }
         else {
+            context.setVariable("shipping", orderDataStore.getShipping());
             context.setVariable("priceSum", cartDataStore.getPriceSum());
             context.setVariable("cart", cartDataStore.getCart());
             engine.process("product/payment.html", context, resp.getWriter());
