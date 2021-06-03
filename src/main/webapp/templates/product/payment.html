@@ -27,14 +27,16 @@
     <script type="text/javascript" src="/static/js/payment.js" defer></script>
 </head>
 <body>
-<div class="jumbotron text-center header">
-    <h1>DaniExpress</h1>
+<div class="headerDiv">
 </div>
 <div class="cart">
-    <h1>Payment</h1>
-    <a class="btn btn-success checkout" href="/checkout">Checkout</a>
+    <h1 class="pageTitle">Payment</h1>
+</div>
+<div class="cart">
+    <a class="toPageBtn" id="cart" href="/checkout">Checkout</a>
 </div>
 <div class="card">
+    <div class="formDiv">
     <div class="priceDiv">
         <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
             <div class="info">
@@ -55,6 +57,7 @@
                 ${shipping.shippingZipcode} + ' ' + ${shipping.shippingZipcode} + ' ' + ${shipping.shippingAddress}"></h3></span>
     </div>
     <hr>
+    <div class="inputFields">
     <form action="/payment" method="post">
         <label for="payPalCheckbox">Pay with PayPal</label>
         <input type="checkbox" name="payPalCheckbox" id="payPalCheckbox">
@@ -78,8 +81,10 @@
             <label for="cardCode">Code</label>
             <input type="text" name="cardCode" id="cardCode" autocomplete="off">
         </div>
-        <button type="submit" id="submitCheckout">Buy</button>
+        <button class="sendBtn" type="submit" id="submitCheckout">Buy</button>
     </form>
+    </div>
+    </div>
 </div>
 </body>
 </html>

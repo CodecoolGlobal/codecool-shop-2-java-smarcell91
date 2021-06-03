@@ -31,30 +31,33 @@
         <h1>DaniExpress</h1>
     </div>
     <div class="cart">
-        <h1>Cart</h1>
-        <a class="btn btn-success checkout" href="/checkout">Checkout</a>
-        <a class="btn btn-success index" href="/">Index</a>
+        <h1 class="pageTitle">Cart</h1>
     </div>
-    <div class="card">
-        <form>
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart.keySet()}">
-            <div class="productcard">
-                <img height="100" width="100" class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="info">
-                    <h4 th:text="${prod.name}">Product name</h4>
-                    <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                </div>
-                <div class="adjust">
-                    <div class="btn btn-success increment" th:id="${prod.getId()}">+</div>
-                    <div class="btn btn-success decrement" th:id="${prod.getId()}">-</div>
-                    <div class="btn btn-success remove" th:id="${prod.getId()}">Remove</div>
-                </div>
-                <div class="amount" th:id="${prod.getId()} + ' amount'">
-                    <input type="text" th:value="${cart.get(prod)}">
+    <div class="cart">
+<!--        <a class="toPageBtn checkout" href="/checkout">Checkout</a>-->
+        <a class="toPageBtn index" href="/">Index</a>
+    </div>
+        <div class="formDiv">
+            <form>
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart.keySet()}">
+                <div class="productcard">
+                    <img height="100" width="100" class="productImage" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                    <div class="info">
+                        <h4 th:text="${prod.name}">Product name</h4>
+                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                    </div>
+                    <div class="adjust">
+                        <div class="plusMinusBtn increment" th:id="${prod.getId()}">+</div>
+                        <div class="plusMinusBtn decrement" th:id="${prod.getId()}">-</div>
+                        <div class="removeBtn remove" th:id="${prod.getId()}">Remove</div>
+                    </div>
+                    <div class="amount" th:id="${prod.getId()} + ' amount'">
+                        <input type="text" th:value="${cart.get(prod)}">
+                    </div>
                 </div>
             </div>
+                <button type="button" class="sendBtn checkout" onclick="location.href='/checkout';">Checkout</button>
+            </form>
         </div>
-        </form>
-    </div>
 </body>
 </html>
