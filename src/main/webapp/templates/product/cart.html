@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,16 +27,19 @@
     <script src="/static/js/cart.js" defer></script>
 </head>
 <body>
-    <div class="jumbotron text-center header">
-        <h1>DaniExpress</h1>
-    </div>
-    <div class="cart">
+<div class="headerDiv">
+</div>
+    <div class="titleHeader">
         <h1 class="pageTitle">Cart</h1>
     </div>
     <div class="cart">
 <!--        <a class="toPageBtn checkout" href="/checkout">Checkout</a>-->
         <a class="toPageBtn index" href="/">Index</a>
+        <hr>
+        <div class="card total">
+        </div>
     </div>
+<div class="formBG">
         <div class="formDiv">
             <form>
             <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${cart.keySet()}">
@@ -55,12 +58,11 @@
                         <input type="text" th:value="${cart.get(prod)}">
                     </div>
                 </div>
+                <hr>
             </div>
                 <button type="button" class="sendBtn checkout" onclick="location.href='/checkout';">Checkout</button>
             </form>
         </div>
-    </div>
-    <div class="card total">
     </div>
 </body>
 </html>

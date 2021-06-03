@@ -30,15 +30,16 @@
 <body>
 <div class="headerDiv">
 </div>
-<div>
-    <a class="toPageBtn cartBtn" href="/cart">Cart</a>
-</div>
-<div class="cart">
+<div class="titleHeader">
     <h1 class="pageTitle">Shipping Infos</h1>
 </div>
-<div class="total">
+<div class="cart">
+    <a class="toPageBtn" href="/cart">Cart</a>
+    <hr>
+    <div class="total">
+    </div>
 </div>
-<div class="card">
+<div class="formBG">
     <div class="formDiv">
         <form action="/checkout" method="post">
             <div id="personalData">
@@ -56,27 +57,27 @@
                     <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>
                 </div>
                 <div class="inputFields">
-                    <label for="phonenum">Phone number</label><br>
+                    <label for="phonenum">Phone:</label><br>
                     <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>
                 </div>
             </div>
             <div id="shippingData">
                 <hr>
-                <h3 class="topicTitle">Shipping address</h3>
+                <h3 class="topicTitle">Shipping address:</h3>
                 <div class="inputFields">
-                    <label for="shippingCountry">Country</label><br>
+                    <label for="shippingCountry">Country:</label><br>
                     <input type="text" name="shippingCountry" id="shippingCountry" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
-                    <label for="shippingCity">City</label><br>
+                    <label for="shippingCity">City:</label><br>
                     <input type="text" name="shippingCity" id="shippingCity" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
-                    <label for="shippingZipcode">Zipcode</label><br>
+                    <label for="shippingZipcode">Zipcode:</label><br>
                     <input type="text" name="shippingZipcode" id="shippingZipcode" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
-                    <label for="shippingAddress">Address</label><br>
+                    <label for="shippingAddress">Address:</label><br>
                     <input type="text" name="shippingAddress" id="shippingAddress" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
@@ -89,19 +90,19 @@
                 <hr>
                 <h3 class="topicTitle">Billing address</h3>
                 <div class="inputFields">
-                    <label for="billingCountry">Country</label><br>
+                    <label for="billingCountry">Country:</label><br>
                     <input type="text" name="billingCountry" id="billingCountry" autocomplete="off">
                 </div>
                 <div class="inputFields">
-                    <label for="billingCity">City</label><br>
+                    <label for="billingCity">City:</label><br>
                     <input type="text" name="billingCity" id="billingCity" autocomplete="off">
                 </div>
                 <div class="inputFields">
-                    <label for="billingCity">Zipcode</label><br>
+                    <label for="billingCity">Zipcode:</label><br>
                     <input type="text" name="billingZipcode" id="billingZipcode" autocomplete="off">
                 </div>
                 <div class="inputFields">
-                    <label for="billingAddress">Address</label><br>
+                    <label for="billingAddress">Address:</label><br>
                     <input type="text" name="billingAddress" id="billingAddress" autocomplete="off">
                 </div>
             </div>

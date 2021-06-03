@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrderDaoMem implements OrderDao {
+    public boolean justOrdered = false;
     CartDaoMem cart;
     private Map<String, String> shipping = new HashMap<>();
     private Map<String, String> payment = new HashMap<>();
@@ -68,5 +69,6 @@ public class OrderDaoMem implements OrderDao {
     @Override
     public void addPayment(Map<String, String> paymentInfo) {
         this.payment = paymentInfo;
+        this.justOrdered = true;
     }
 }

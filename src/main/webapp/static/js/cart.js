@@ -59,7 +59,7 @@ function fetchProducts() {
             if (productList != null) {
                 productList.innerHTML = "";
                 for (let i = 0; i < data.length; i++) {
-                    const option = document.createElement("option");
+                    const option = document.createElement("li");
                     option.innerText = data[i];
                     productList.appendChild(option);
                 }

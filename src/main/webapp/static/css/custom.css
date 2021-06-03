@@ -102,6 +102,8 @@ body{
 
 .cart
 {
+    border-radius: 10px;
+    position: fixed;
     padding: 10px;
     background-color: #41b3a3;
     text-align: center;
@@ -110,6 +112,7 @@ body{
 .total 
 {
     float: right;
+    background-color: #41b3a3;
 }
 
 .header
@@ -158,8 +161,7 @@ body{
     font-size: 20px;
     color: whitesmoke;
     display: inline-flex;
-    flex-wrap: nowrap;
-    padding: 20px;
+    padding: 10px;
     text-shadow: 1px 1px black;
 }
 
@@ -285,6 +287,18 @@ body{
 .removeBtn:hover {
     background-color: #e27d60;
     cursor: default;
+}
+
+.titleHeader {
+    width: border-box;
+    height: 80px;
+    background-color: #41b3a3;
+    text-align: center;
+}
+
+.formBG {
+    border-radius: 10px;
+    background-color: #85dcbb;
 }
 
 

@@ -35,10 +35,10 @@
 </div>
 
 <div class="cart">
-    <select class="cartitems"></select>
+    <ul class="cartitems"></ul><br>
     <a class="toPageBtn" id="cart" href="/cart">Cart</a>
 </div>
-
+<div style="text-align: center;font-size: 20px" th:if="${justOrdered}">Your order is on the way!</div>
 <div class="container">
     <div class="selectDiv">
             <form action="/" class="formStyle">

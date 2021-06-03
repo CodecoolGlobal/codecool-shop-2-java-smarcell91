@@ -29,19 +29,19 @@
 <body>
 <div class="headerDiv">
 </div>
-<div class="cart">
+<div class="titleHeader">
     <h1 class="pageTitle">Payment</h1>
 </div>
 <div class="cart">
     <a class="toPageBtn" id="cart" href="/checkout">Checkout</a>
 </div>
-<div class="card">
+<div class="formBG">
     <div class="formDiv">
     <div class="priceDiv">
-        <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
-            <div class="info">
-                <h4 th:text="${prod.name}">Product name</h4>
-                <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+        <div id="allProductPrise" th:each="prod : ${cart}">
+            <div class="info" th:each="key : ${prod.key}">
+                <h4 th:text="${key.name}">Product name</h4>
+                <p class="lead" th:text="${prod.value} + ' x  ' + ${key.getPrice()}">100 USD</p>
             </div>
         </div>
         <div id="totalPrice">
@@ -66,22 +66,22 @@
         <div id="paypal">
             <h3>Pay Pal</h3>
             <label for="payPalUsername">Pay Pal username</label>
-            <input type="text" name="payPalUsername" id="payPalUsername" autocomplete="off">
+            <input type="text" name="payPalUsername" id="payPalUsername" autocomplete="off"><br>
             <label for="payPalPW">Pay Pal password</label>
             <input type="password" name="payPalPW" id="payPalPW" autocomplete="off">
         </div>
         <div id="creditCard">
             <h3>Credit card</h3>
             <label for="cardNumber">Card number</label>
-            <input type="text" name="cardNumber" id="cardNumber" autocomplete="off">
-            <label for="cardHolder">Card holder</label>
-            <input type="text" name="cardHolder" id="cardHolder" autocomplete="off">
-            <label for="expiryDate">Expiry date</label>
-            <input type="text" name="expiryDate" id="expiryDate" autocomplete="off">
-            <label for="cardCode">Code</label>
+            <input type="text" name="cardNumber" id="cardNumber" autocomplete="off"><br>
+            <label for="cardHolder">Card holder&ensp;</label>
+            <input type="text" name="cardHolder" id="cardHolder" autocomplete="off"><br>
+            <label for="expiryDate">Expiry date&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="expiryDate" id="expiryDate" autocomplete="off"><br>
+            <label for="cardCode">Code&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&ensp;</label>
             <input type="text" name="cardCode" id="cardCode" autocomplete="off">
         </div>
-        <button class="sendBtn" type="submit" id="submitCheckout">Buy</button>
+        <button class="sendBtn" type="submit" id="submitPayment">Buy</button>
     </form>
     </div>
     </div>

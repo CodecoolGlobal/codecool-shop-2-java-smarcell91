@@ -13,6 +13,9 @@ let creditCard = document.getElementById("cardCheckbox");
 let creditCardDiv = document.getElementById("creditCard");
 let payPalDiv = document.getElementById("paypal")
 
+let submitPayment = document.getElementById("submitPayment");
+
+
 payPal.onclick = () => {
     if (payPal.checked === true) {
         payPalDiv.style.visibility = "visible";
