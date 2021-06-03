@@ -4,8 +4,9 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.Product;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.List;
 
 public class CartDaoMem implements CartDao {
     
@@ -70,5 +71,28 @@ public class CartDaoMem implements CartDao {
     @Override
     public Map<Product, Integer> getCart() {
         return cart;
+    }
+
+    @Override
+    public void setCart(Map<Product, Integer> cart) {
+        this.cart = cart;
+    }
+
+    @Override
+    public List<String> getProductsNames() {
+        var products = new ArrayList<String>();
+        for (Product product : cart.keySet()) {
+            products.add(product.getName());
+        }
+        return products;
+    }
+
+    @Override
+    public int getCartSize() {
+        int size = 0;
+        for (int value : cart.values()) {
+            size += Integer.valueOf(value);
+        }
+        return size;
     }
 }

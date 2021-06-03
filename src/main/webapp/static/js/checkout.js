@@ -1,4 +1,4 @@
-
+showTotal();
 
 let firstName = document.getElementById('firstName');
 let lastName = document.getElementById('lastName');
@@ -43,4 +43,20 @@ function emptyBillingAddress() {
     billingCity.value = "";
     billingZipcode.value = "";
     billingAddress.value = "";
+}
+
+async function showTotal() {
+    const total = document.querySelector(".total");
+    console.log(total)
+    if (total != null) {
+    await fetch("fetchitems/price")
+        .then((response => response.json()))
+        .then(data => {
+            console.log(data)
+            total.innerHTML = "";
+            let h2 = document.createElement("h2");
+            h2.innerText = "Total price: " + data.toFixed(1) + " USD";
+            total.appendChild(h2);
+        })
+    }
 }

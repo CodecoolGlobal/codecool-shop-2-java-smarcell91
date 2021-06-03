@@ -112,6 +112,11 @@ body{
     margin: 0px;
 }
 
+.cartitems
+{
+    float: right;
+}
+
 .cartback
 {
     float: right;

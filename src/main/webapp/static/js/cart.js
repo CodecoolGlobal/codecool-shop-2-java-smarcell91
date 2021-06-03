@@ -1,4 +1,7 @@
 initializeButtons();
+fetchProducts();
+fetchCartSize();
+showTotal();
 
 function initializeButtons() {
     const addButtons = document.querySelectorAll(".add-to-cart");
@@ -23,10 +26,54 @@ function initializeButtons() {
     }
 }
 
-function addToCart(id) {
-    fetch(`cart/add?id=${id}`, {
+async function addToCart(id) {
+    await fetch(`cart/add?id=${id}`, {
         method: "GET"
     })
+    fetchProducts();
+    fetchCartSize();
+    showTotal();
+}
+
+function showTotal() {
+    const prices = document.querySelectorAll(".lead");
+    const total = document.querySelector(".total");
+    const amounts = document.querySelectorAll("input");
+    let totalPrice = 0;
+    if (total != null) {
+        total.innerHTML = "";
+        for (let i = 0; i < prices.length; i++) {
+            totalPrice += parseFloat(prices[i].innerText.split(" ")[0]) * amounts[i].value;
+        }
+        let h2 = document.createElement("h2");
+        h2.innerText = "Total price: " + totalPrice.toFixed(1) + " USD";
+        total.appendChild(h2);
+    }
+}
+
+function fetchProducts() {
+    fetch("fetchitems/name")
+        .then((response) => response.json())
+        .then((data) => {
+            const productList = document.querySelector(".cartitems");
+            if (productList != null) {
+                productList.innerHTML = "";
+                for (let i = 0; i < data.length; i++) {
+                    const option = document.createElement("option");
+                    option.innerText = data[i];
+                    productList.appendChild(option);
+                }
+            }
+        })
+}
+
+function fetchCartSize() {
+    fetch("fetchitems/size")
+        .then((response) => response.json())
+        .then(data => {
+            const size = document.querySelector("#cart");
+            if (size != null) size.innerText = "Cart (" + data + ")";
+        })
 }
 
 function incrementAmount(id) {
@@ -41,6 +88,7 @@ function incrementAmount(id) {
         }
     }
     document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) + 1}">`
+    showTotal();
 }
 
 function decrementAmount(id) {
@@ -56,6 +104,7 @@ function decrementAmount(id) {
     }
     if (parseInt(children[counter].value) > 1) {
     document.getElementById(`${id} amount`).innerHTML = `<input type="text" value="${parseInt(children[counter].value) - 1}">`} else {removeProduct(id)}
+    showTotal();
 }
 
 function removeProduct(id) {
@@ -63,4 +112,5 @@ function removeProduct(id) {
         method: "GET"
     })
     location.reload();
+    showTotal();
 }
