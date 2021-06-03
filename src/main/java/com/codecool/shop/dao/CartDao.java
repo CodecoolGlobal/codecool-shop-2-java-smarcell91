@@ -14,4 +14,5 @@ public interface CartDao {
     Map<Product, Integer> getCart();
     void setCart(Map<Product, Integer> cart);
     List<String> getProductsNames();
+    int getCartSize();
 }
