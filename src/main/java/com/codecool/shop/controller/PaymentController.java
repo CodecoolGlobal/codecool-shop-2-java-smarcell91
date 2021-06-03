@@ -3,6 +3,8 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.model.Product;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -48,6 +50,8 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("payPalPW", payPalPW);
             orderDataStore.addPayment(paymentInfo);
             orderDataStore.toJSON();
+            Map<Product, Integer> newCart = new HashMap<>();
+            cartDataStore.setCart(newCart);
             resp.sendRedirect("/");
         }
         else if (Objects.equals(cardCheckbox, "on") && payPalCheckbox == null &&
@@ -60,6 +64,8 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("cardCode", cardCode);
             orderDataStore.addPayment(paymentInfo);
             orderDataStore.toJSON();
+            Map<Product, Integer> newCart = new HashMap<>();
+            cartDataStore.setCart(newCart);
             resp.sendRedirect("/");
         }
         else {
