@@ -1,5 +1,6 @@
 initializeButtons();
 fetchProducts();
+fetchCartSize();
 showTotal();
 
 function initializeButtons() {
@@ -30,6 +31,7 @@ async function addToCart(id) {
         method: "GET"
     })
     fetchProducts();
+    fetchCartSize();
     showTotal();
 }
 
@@ -62,6 +64,15 @@ function fetchProducts() {
                     productList.appendChild(option);
                 }
             }
+        })
+}
+
+function fetchCartSize() {
+    fetch("fetchitems/size")
+        .then((response) => response.json())
+        .then(data => {
+            const size = document.querySelector("#cart");
+            if (size != null) size.innerText = "Cart (" + data + ")";
         })
 }
 
