@@ -107,6 +107,11 @@ body{
     text-align: center;
 }
 
+.total 
+{
+    float: right;
+}
+
 .header
 {
     margin: 0px;
