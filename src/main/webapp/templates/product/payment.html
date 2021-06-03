@@ -27,25 +27,37 @@
     <script type="text/javascript" src="/static/js/payment.js" defer></script>
 </head>
 <body>
-<div class="jumbotron text-center header">
-    <h1>DaniExpress</h1>
+<div class="headerDiv">
 </div>
 <div class="cart">
-    <h1>Payment</h1>
-    <a class="btn btn-success checkout" href="/checkout">Checkout</a>
+    <h1 class="pageTitle">Payment</h1>
+</div>
+<div class="cart">
+    <a class="toPageBtn" id="cart" href="/checkout">Checkout</a>
 </div>
 <div class="card">
-    <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
-        <div class="info">
-            <h4 th:text="${prod.name}">Product name</h4>
-            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+    <div class="formDiv">
+    <div class="priceDiv">
+        <div id="allProductPrise" th:each="prod,iterStat : ${cart.keySet()}">
+            <div class="info">
+                <h4 th:text="${prod.name}">Product name</h4>
+                <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+            </div>
+        </div>
+        <div id="totalPrice">
+            <h3>Total price: <span th:text="${priceSum}"></span> USD</h3>
         </div>
     </div>
     <hr>
-    <div id="totalPrice">
-        <h3>Total price: <span th:text="${priceSum}"></span> USD</h3>
+    <div class="shippingInfo">
+        <span><h4>Name:</h4><h3 th:text="${shipping.firstName} + ' ' + ${shipping.lastName}"></h3></span>
+        <span><h4>Email:</h4><h3 th:text="${shipping.email}"></h3></span>
+        <span><h4>Phone number:</h4><h3 th:text="${shipping.phone}"></h3></span>
+        <span><h4>Address:</h4><h3 th:text="${shipping.shippingCountry} + ' ' + ${shipping.shippingCity} + ' ' +
+                ${shipping.shippingZipcode} + ' ' + ${shipping.shippingZipcode} + ' ' + ${shipping.shippingAddress}"></h3></span>
     </div>
     <hr>
+    <div class="inputFields">
     <form action="/payment" method="post">
         <label for="payPalCheckbox">Pay with PayPal</label>
         <input type="checkbox" name="payPalCheckbox" id="payPalCheckbox">
@@ -54,23 +66,25 @@
         <div id="paypal">
             <h3>Pay Pal</h3>
             <label for="payPalUsername">Pay Pal username</label>
-            <input type="text" name="payPalUsername" id="payPalUsername">
+            <input type="text" name="payPalUsername" id="payPalUsername" autocomplete="off">
             <label for="payPalPW">Pay Pal password</label>
-            <input type="password" name="payPalPW" id="payPalPW">
+            <input type="password" name="payPalPW" id="payPalPW" autocomplete="off">
         </div>
         <div id="creditCard">
             <h3>Credit card</h3>
             <label for="cardNumber">Card number</label>
-            <input type="text" name="cardNumber" id="cardNumber">
+            <input type="text" name="cardNumber" id="cardNumber" autocomplete="off">
             <label for="cardHolder">Card holder</label>
-            <input type="text" name="cardHolder" id="cardHolder">
+            <input type="text" name="cardHolder" id="cardHolder" autocomplete="off">
             <label for="expiryDate">Expiry date</label>
-            <input type="text" name="expiryDate" id="expiryDate">
+            <input type="text" name="expiryDate" id="expiryDate" autocomplete="off">
             <label for="cardCode">Code</label>
-            <input type="text" name="cardCode" id="cardCode">
+            <input type="text" name="cardCode" id="cardCode" autocomplete="off">
         </div>
-        <button type="submit" id="submitCheckout">Go to Payment</button>
+        <button class="sendBtn" type="submit" id="submitCheckout">Buy</button>
     </form>
+    </div>
+    </div>
 </div>
 </body>
 </html>
