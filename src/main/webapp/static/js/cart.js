@@ -41,16 +41,16 @@ function showTotal() {
     if (total != null) {
         total.innerHTML = "";
         for (let i = 0; i < prices.length; i++) {
-            totalPrice += parseInt(prices[i].innerText.split(" ")[0]) * amounts[i].value;
+            totalPrice += parseFloat(prices[i].innerText.split(" ")[0]) * amounts[i].value;
         }
         let h2 = document.createElement("h2");
-        h2.innerText = "Total price: " + totalPrice + " USD";
+        h2.innerText = "Total price: " + totalPrice.toFixed(1) + " USD";
         total.appendChild(h2);
     }
 }
 
 function fetchProducts() {
-    fetch("fetchitems")
+    fetch("fetchitems/name")
         .then((response) => response.json())
         .then((data) => {
             const productList = document.querySelector(".cartitems");
