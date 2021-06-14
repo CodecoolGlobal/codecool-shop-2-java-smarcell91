@@ -24,3 +24,20 @@ CREATE TABLE suppliers (
     description text
 );
 
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE users (
+    id serial NOT NULL,
+    name text,
+    email text,
+    pw_hash text
+);
+
+DROP TABLE IF EXISTS public.orders;
+CREATE TABLE orders (
+    id serial NOT NULL,
+    date date,
+    paid boolean,
+    products text
+);
+
+
