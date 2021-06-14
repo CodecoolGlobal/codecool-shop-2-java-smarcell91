@@ -26,25 +26,50 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script src="/static/js/cart.js" defer></script>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+<div class="headerDiv">
 </div>
 
+<div class="cart">
+    <ul class="cartitems"></ul><br>
+    <a class="toPageBtn" id="cart" href="/cart">Cart</a>
+</div>
+<div style="text-align: center;font-size: 20px" th:if="${justOrdered}">Your order is on the way!</div>
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="selectDiv">
+            <form action="/" class="formStyle">
+    <!--            onchange="this.form.submit();-->
+                <select name="selectedCategory" id="selectedCategory" onchange="this.form.submit();">
+                    <option value="All" th:selected="${categories.size()+1} == ${category.id}">All category</option>
+                    <option th:each="categ,iterStat : ${categories}"
+                            th:text="${categ.name}"
+                            th:value="${categ.name}"
+                            th:selected="${categ.id} == ${category.id}"></option>
+                </select>
+            </form>
+            <form action="/" class="formStyle">
+                <select name="selectedSupplier" id="selectSupplier" onchange="this.form.submit();">
+                    <option value="All" th:selected="${suppliers.size()+1} == ${supplier.id}">All supplier</option>
+                    <option th:each="supp,iterStat : ${suppliers}"
+                            th:text="${supp.name}"
+                            th:value="${supp.name}"
+                            th:selected="${supp.id} == ${supplier.id}"></option>
+                </select>
+            </form>
+        <strong th:if="${category != null}" th:text="${category.name}">Category</strong>
+        <strong th:if="${supplier != null}" th:text="${supplier.name}">Supplier</strong>
     </div>
 
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div style="padding: 10px" class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="productImage" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                    <h4 th:class="card-title + ' ' + ${prod.getId()}" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
                 </div>
                 <div class="card-body">
@@ -52,7 +77,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="add-to-cart" th:id="${prod.getId()}" href="#">Add to cart</a>
                     </div>
                 </div>
             </div>

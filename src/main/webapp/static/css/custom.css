@@ -1,3 +1,8 @@
+
+body{
+    background-color: #e8a87c;
+}
+
 .glyphicon {
     margin-right:5px;
 }
@@ -20,10 +25,10 @@
     background-color: #fff;
     margin-bottom: 10px;
 }
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
-    background: #428bca;
-}
+/*.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover*/
+/*{*/
+/*    background: #428bca;*/
+/*}*/
 
 .item.list-group-item .list-group-image
 {
@@ -60,3 +65,245 @@
 {
     margin: 0 0 11px;
 }
+
+.card {
+    border-radius: 10px;
+    background-color: #85dcbb;
+}
+
+#cart 
+{
+    float: right;
+}
+
+.productcard 
+{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.info
+{
+    float: right;
+    margin-left: 15px;
+}
+
+.adjust
+{
+    margin-top: 15px;
+    margin-left: 100px;
+}
+
+.amount
+{
+    margin: 15px;
+    margin-top: 25px;
+}
+
+.cart
+{
+    border-radius: 10px;
+    position: fixed;
+    padding: 10px;
+    background-color: #41b3a3;
+    text-align: center;
+}
+
+.total 
+{
+    float: right;
+    background-color: #41b3a3;
+}
+
+.header
+{
+    margin: 0px;
+}
+
+.cartitems
+{
+    float: right;
+}
+
+.cartback
+{
+    float: right;
+}
+
+.index
+{
+    float: left;
+}
+
+.checkout
+{
+    float: right;
+}
+
+#paypal {
+    visibility: hidden;
+}
+
+#creditCard {
+    visibility: hidden;
+}
+
+#allProductPrise {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#lastName {
+    padding-left: 50px;
+}
+
+.inputFields {
+    font-size: 20px;
+    color: whitesmoke;
+    display: inline-flex;
+    padding: 10px;
+    text-shadow: 1px 1px black;
+}
+
+.formDiv{
+    background-color: #e8a87c;
+    font-weight: bold;
+    border: black 2px;
+    border-radius: 20px;
+    margin: auto;
+    width: 800px;
+    padding: 20px;
+}
+
+.sendBtn {
+    margin:auto;
+    display:block;
+    border-radius: 10px;
+    font-size: 25px;
+    width: 700px;
+    height: 40px;
+    background-color: #41b3a3;
+    color: whitesmoke;
+}
+
+.sendBtn:hover {
+    background-color: #85dcbb;
+    cursor: default;
+}
+
+.topicTitle {
+    text-shadow: 2px 1px #85dcbb;
+    font-weight: 900;
+    color: #41b3a3;
+}
+
+.pageTitle {
+    text-shadow: 2px 3px  grey;
+    font-weight: 900;
+    color: #e27d60;
+}
+
+.cartBtn {
+    position: absolute;
+    padding-left: 100px;
+    padding-top: 300px;
+}
+
+.headerDiv {
+    background-position: center;
+    height: 321px;
+    background-image: url("DaniExpress.png");
+    background-repeat: no-repeat;
+    background-color: #e27d60;
+}
+
+.selectDiv {
+    border-radius: 10px;
+    background-color: #c38d9e;
+}
+
+.formStyle {
+    padding: 10px;
+    display:inline-block;
+}
+
+.add-to-cart {
+    text-align: center;
+    text-shadow: 2px 1px #41b3a3;
+    float: right;
+    width: 200px;
+    height: 50px;
+    background-color: #c38d9e;
+    border-radius: 20px;
+    border: 2px solid #41b3a3;
+    font-size: 25px;
+    font-weight: 900;
+    color: whitesmoke;
+}
+
+.toPageBtn {
+    display: inline-block;
+    text-shadow: 2px 1px #41b3a3;
+    float: right;
+    width: 250px;
+    height: 80px;
+    background-color: #c38d9e;
+    border-radius: 10px;
+    border: 5px solid #41b3a3;
+    font-size: 40px;
+    font-weight: 900;
+    color: whitesmoke;
+}
+
+.productImage {
+    border-radius: 10px;
+}
+
+.plusMinusBtn {
+    text-align: center;
+    border-radius: 5px;
+    display: inline-flex;
+    background-color: #41b3a3;
+    border: 1px solid #c38d9e;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.plusMinusBtn:hover {
+    background-color: #85dcbb;
+    cursor: default;
+}
+
+.removeBtn {
+    text-align: center;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: #c38d9e;
+    width: 65px;
+    height: 30px;
+}
+
+.removeBtn:hover {
+    background-color: #e27d60;
+    cursor: default;
+}
+
+.titleHeader {
+    width: border-box;
+    height: 80px;
+    background-color: #41b3a3;
+    text-align: center;
+}
+
+.formBG {
+    border-radius: 10px;
+    background-color: #85dcbb;
+}
+
+
+#e27d60 halványpiros
+#85dcbb világoskék
+#e8a87c barack
+#c38d9e fakóbordó
+#41b3a3 zölderskék

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script type="text/javascript" src="/static/js/payment.js" defer></script>
+</head>
+<body>
+<div class="headerDiv">
+</div>
+<div class="titleHeader">
+    <h1 class="pageTitle">Payment</h1>
+</div>
+<div class="cart">
+    <a class="toPageBtn" id="cart" href="/checkout">Checkout</a>
+</div>
+<div class="formBG">
+    <div class="formDiv">
+    <div class="priceDiv">
+        <div id="allProductPrise" th:each="prod : ${cart}">
+            <div class="info" th:each="key : ${prod.key}">
+                <h4 th:text="${key.name}">Product name</h4>
+                <p class="lead" th:text="${prod.value} + ' x  ' + ${key.getPrice()}">100 USD</p>
+            </div>
+        </div>
+        <div id="totalPrice">
+            <h3>Total price: <span th:text="${priceSum}"></span> USD</h3>
+        </div>
+    </div>
+    <hr>
+    <div class="shippingInfo">
+        <span><h4>Name:</h4><h3 th:text="${shipping.firstName} + ' ' + ${shipping.lastName}"></h3></span>
+        <span><h4>Email:</h4><h3 th:text="${shipping.email}"></h3></span>
+        <span><h4>Phone number:</h4><h3 th:text="${shipping.phone}"></h3></span>
+        <span><h4>Address:</h4><h3 th:text="${shipping.shippingCountry} + ' ' + ${shipping.shippingCity} + ' ' +
+                ${shipping.shippingZipcode} + ' ' + ${shipping.shippingZipcode} + ' ' + ${shipping.shippingAddress}"></h3></span>
+    </div>
+    <hr>
+    <div class="inputFields">
+    <form action="/payment" method="post">
+        <label for="payPalCheckbox">Pay with PayPal</label>
+        <input type="checkbox" name="payPalCheckbox" id="payPalCheckbox">
+        <label for="cardCheckbox">Pay with Credit card</label>
+        <input type="checkbox" name="cardCheckbox" id="cardCheckbox">
+        <div id="paypal">
+            <h3>Pay Pal</h3>
+            <label for="payPalUsername">Pay Pal username</label>
+            <input type="text" name="payPalUsername" id="payPalUsername" autocomplete="off"><br>
+            <label for="payPalPW">Pay Pal password</label>
+            <input type="password" name="payPalPW" id="payPalPW" autocomplete="off">
+        </div>
+        <div id="creditCard">
+            <h3>Credit card</h3>
+            <label for="cardNumber">Card number</label>
+            <input type="text" name="cardNumber" id="cardNumber" autocomplete="off"><br>
+            <label for="cardHolder">Card holder&ensp;</label>
+            <input type="text" name="cardHolder" id="cardHolder" autocomplete="off"><br>
+            <label for="expiryDate">Expiry date&nbsp;&nbsp;&nbsp;</label>
+            <input type="text" name="expiryDate" id="expiryDate" autocomplete="off"><br>
+            <label for="cardCode">Code&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&ensp;</label>
+            <input type="text" name="cardCode" id="cardCode" autocomplete="off">
+        </div>
+        <button class="sendBtn" type="submit" id="submitPayment">Buy</button>
+    </form>
+    </div>
+    </div>
+</div>
+</body>
+</html>

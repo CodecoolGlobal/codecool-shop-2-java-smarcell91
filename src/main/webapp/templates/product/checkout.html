@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script type="text/javascript" src="/static/js/checkout.js" defer></script>
+    <script type="text/javascript" src="/static/js/cart.js" defer></script>
+</head>
+<body>
+<div class="headerDiv">
+</div>
+<div class="titleHeader">
+    <h1 class="pageTitle">Shipping Infos</h1>
+</div>
+<div class="cart">
+    <a class="toPageBtn" href="/cart">Cart</a>
+    <hr>
+    <div class="total">
+    </div>
+</div>
+<div class="formBG">
+    <div class="formDiv">
+        <form action="/checkout" method="post">
+            <div id="personalData">
+                <h3 class="topicTitle">Personal</h3>
+                <div class="inputFields">
+                    <label for="firstName">First name:</label><br>
+                    <input type="text" name="firstName" id="firstName" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="lastName">Last name:</label><br>
+                    <input type="text" name="lastName" id="lastName" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="email">Email:</label><br>
+                    <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>
+                </div>
+                <div class="inputFields">
+                    <label for="phonenum">Phone:</label><br>
+                    <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>
+                </div>
+            </div>
+            <div id="shippingData">
+                <hr>
+                <h3 class="topicTitle">Shipping address:</h3>
+                <div class="inputFields">
+                    <label for="shippingCountry">Country:</label><br>
+                    <input type="text" name="shippingCountry" id="shippingCountry" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingCity">City:</label><br>
+                    <input type="text" name="shippingCity" id="shippingCity" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingZipcode">Zipcode:</label><br>
+                    <input type="text" name="shippingZipcode" id="shippingZipcode" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <label for="shippingAddress">Address:</label><br>
+                    <input type="text" name="shippingAddress" id="shippingAddress" autocomplete="off" required>
+                </div>
+                <div class="inputFields">
+                    <input type="checkbox" name="sameAddress" id="sameAddress">
+                    <h5>Billing address is same as the shipping address!</h5>
+<!--                    <label for="sameAddress">Billing address is same as the shipping address!</label>-->
+                </div>
+            </div>
+            <div id="billingData">
+                <hr>
+                <h3 class="topicTitle">Billing address</h3>
+                <div class="inputFields">
+                    <label for="billingCountry">Country:</label><br>
+                    <input type="text" name="billingCountry" id="billingCountry" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingCity">City:</label><br>
+                    <input type="text" name="billingCity" id="billingCity" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingCity">Zipcode:</label><br>
+                    <input type="text" name="billingZipcode" id="billingZipcode" autocomplete="off">
+                </div>
+                <div class="inputFields">
+                    <label for="billingAddress">Address:</label><br>
+                    <input type="text" name="billingAddress" id="billingAddress" autocomplete="off">
+                </div>
+            </div>
+            <button class="sendBtn" type="submit" id="submitCheckout">Go to Payment</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
