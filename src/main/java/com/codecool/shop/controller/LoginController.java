@@ -20,7 +20,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         boolean isCorrectUser = false;
-        String emailInput = request.getparameter("email");
+        String emailInput = request.getParameter("email");
         String passwordInput = request.getParameter("password");
         String password = ""; // get password from database
         if (hashPassword(passwordInput).equals(password)) {
