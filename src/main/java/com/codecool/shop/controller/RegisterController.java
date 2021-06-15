@@ -57,7 +57,7 @@ public class RegisterController extends HttpServlet {
     }
 
     public static void sendEmail(String email) {    
-        String from = "Codecoolshop.DaniExpress@gmail.com";
+        String from = "codecoolshop.daniexpress@gmail.com";
         String host = "localhost";
         Properties properties = System.getProperties();
         properties.setProperty("mail.smtp.host", host);
