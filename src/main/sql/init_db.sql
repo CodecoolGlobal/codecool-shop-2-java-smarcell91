@@ -4,6 +4,7 @@ CREATE TABLE products (
     id serial NOT NULL,
     name text,
     description text,
+    currency text,
     default_price float,
     category_id int,
     supplier_id int
