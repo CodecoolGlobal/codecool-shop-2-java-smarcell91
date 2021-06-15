@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.DaoManager;
+import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 
@@ -13,8 +16,11 @@ import java.io.IOException;
 
 @WebServlet(name = "cartController", urlPatterns = {"/cart/add", "/cart/decrement", "/cart/remove"})
 public class CartController extends HttpServlet {
-    CartDaoMem cdm = CartDaoMem.getInstance();
-    ProductDaoMem pdm = ProductDaoMem.getInstance();
+    DaoManager daoManager = DaoManager.getInstance();
+    CartDao cartDao = daoManager.getCartDao();
+    ProductDao productDao = daoManager.getProductDao();
+//    CartDaoMem cdm = CartDaoMem.getInstance();
+//    ProductDaoMem pdm = ProductDaoMem.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
