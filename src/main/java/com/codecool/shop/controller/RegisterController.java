@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.codecool.shop.dao.DaoManager;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.model.User;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
@@ -15,6 +19,9 @@ import java.security.spec.KeySpec;
 
 @WebServlet(name = "registerController", urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
+    private DaoManager daoManager = new DaoManager();
+    private UserDao userDao = daoManager.getUserDao();
+    private String salt = "";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,21 +29,16 @@ public class RegisterController extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String password = hashPassword(request.getParameter("password"));
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(email);
-        System.out.println(password);
+        User user = new User(firstName, lastName, email, password, salt);
+        userDao.add(user);
         response.sendRedirect(request.getContextPath());
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
     protected String hashPassword(String password) {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
+        this.salt = new String(salt);
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
