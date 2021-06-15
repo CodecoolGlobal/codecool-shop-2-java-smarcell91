@@ -22,11 +22,13 @@ public class LoginController extends HttpServlet {
         boolean isCorrectUser = false;
         String emailInput = request.getParameter("email");
         String passwordInput = request.getParameter("password");
-        String password = ""; // get password from database
-        if (hashPassword(passwordInput).equals(password)) {
-            isCorrectUser = true;
-        }
+        String password = ""; // get password from database by email
+        if (emailInput.equals("feherdaniel2010@gmail.com")) isCorrectUser = true; // for testing
+        // if (hashPassword(passwordInput).equals(password)) {
+        //     isCorrectUser = true;
+        // }
         session.setAttribute("loggedIn", isCorrectUser);
+        session.setAttribute("email", emailInput);
         // TODO: Check in database & log in if correct, error message if not
         response.sendRedirect(request.getContextPath());
     }
