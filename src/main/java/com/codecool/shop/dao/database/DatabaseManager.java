@@ -44,6 +44,10 @@ public class DatabaseManager {
         return productCategoryDao;
     }
 
+    public CartDao getCartDao() {
+        return cartDao;
+    }
+
     private DataSource connect(String database, String user, String password) throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 

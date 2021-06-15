@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CartDaoMem implements CartDao {
     private static Logger logger = LoggerFactory.getLogger(CartDaoMem.class);
-    private Map<Product, Integer> cart = new HashMap<Product, Integer>();
+    private Map<Integer, Map<Product, Integer> cart = new HashMap<Product, Integer>();
     private static CartDaoMem instance = null;
 
     private CartDaoMem() {
