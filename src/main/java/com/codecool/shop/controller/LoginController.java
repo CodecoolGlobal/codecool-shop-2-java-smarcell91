@@ -9,27 +9,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.codecool.shop.dao.DaoManager;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.model.User;
+
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
 @WebServlet(name = "loginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
+    DaoManager daoManager = new DaoManager();
+    UserDao userDao = daoManager.getUserDao();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         boolean isCorrectUser = false;
+        boolean missedPassword = false;
         String emailInput = request.getParameter("email");
         String passwordInput = request.getParameter("password");
-        String password = ""; // get password from database by email
-        if (emailInput.equals("feherdaniel2010@gmail.com")) isCorrectUser = true; // for testing
-        // if (hashPassword(passwordInput).equals(password)) {
-        //     isCorrectUser = true;
-        // }
+        User user = userDao.find(emailInput);
+        if (user != null) {
+            if (hashPassword(passwordInput).equals(user.getPwHash())) {
+                isCorrectUser = true;
+            } else {
+                missedPassword = true;
+            }
+        } else {
+            missedPassword = true;
+        }
         session.setAttribute("loggedIn", isCorrectUser);
         session.setAttribute("email", emailInput);
-        // TODO: Check in database & log in if correct, error message if not
+        session.setAttribute("missedPassword", missedPassword);
         response.sendRedirect(request.getContextPath());
     }
 
