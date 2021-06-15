@@ -40,6 +40,7 @@
         <button th:if="${session.loggedIn}" type="button" id="logout">Log out</button>
         <button th:unless="${session.loggedIn}" type="button" id="login">Login</button>
         <button th:unless="${session.loggedIn}" type="button" id="register">Registration</button>
+        <p th:if="${session.missedPassword}">Wrong email or password</p>
     </div>
 </div>
 
