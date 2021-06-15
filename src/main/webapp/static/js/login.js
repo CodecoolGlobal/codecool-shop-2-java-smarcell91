@@ -6,12 +6,14 @@ function initButton() {
 }
 
 function openLogin() {
-    if (document.querySelector("#loginForm") == null) {
-        const div = document.querySelector(".login");
+    const div = document.querySelector(".user");
+    if (document.querySelector("#loginForm") == null && document.querySelector("#registerForm") == null) {
         const form = document.createElement("form");
         const email = document.createElement("input");
         const pw = document.createElement("input");
         const submit = document.createElement("input");
+        const newDiv = document.createElement("div");
+        newDiv.setAttribute("class", "userHandle");
         submit.setAttribute("type", "submit");
         form.setAttribute("action", "/login");
         form.setAttribute("method", "POST");
@@ -27,6 +29,10 @@ function openLogin() {
         form.appendChild(email);
         form.appendChild(pw);
         form.appendChild(submit);
-        div.appendChild(form);
+        newDiv.appendChild(form);
+        div.appendChild(newDiv);
+    } else {
+        const userHandle = document.querySelector(".userHandle");
+        div.removeChild(userHandle);
     }
 }
