@@ -2,7 +2,7 @@ initButton()
 
 function initButton() {
     const button = document.getElementById("login");
-    button.addEventListener("click", openLogin)
+    if (button != null) button.addEventListener("click", openLogin)
 }
 
 function openLogin() {

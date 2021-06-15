@@ -2,7 +2,7 @@ initButton()
 
 function initButton() {
     const button = document.querySelector("#register");
-    button.addEventListener("click", openRegister);
+    if (button != null) button.addEventListener("click", openRegister);
 }
 
 function openRegister() {
