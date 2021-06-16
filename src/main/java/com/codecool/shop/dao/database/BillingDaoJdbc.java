@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -49,28 +47,11 @@ public class BillingDaoJdbc implements BillingDao {
             if (!rs.next()) {
                 return null;
             }
-            Billing billing = new Billing(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
+            Billing billing = new Billing(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getInt(2));
             billing.setId(rs.getInt(1));
             return billing;
         } catch (SQLException e) {
             throw new RuntimeException("Error while searching for billing", e);
-        }
-    }
-
-    @Override
-    public List<Billing> getAll() {
-        try (Connection c = dataSource.getConnection()) {
-            String sql = "SELECT id, user_id, country, city, zipcode, address FROM billing";
-            ResultSet rs = c.createStatement().executeQuery(sql);
-            List<Billing> billingList = new ArrayList<>();
-            while (rs.next()) {
-                Billing billing = new Billing(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
-                billing.setId(rs.getInt(1));
-                billingList.add(billing);
-            }
-            return billingList;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error while getting all billings", e);
         }
     }
 

@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -49,28 +47,11 @@ public class ShippingDaoJdbc implements ShippingDao {
             if (!rs.next()) {
                 return null;
             }
-            Shipping shipping = new Shipping(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
+            Shipping shipping = new Shipping(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6), rs.getInt(2));
             shipping.setId(rs.getInt(1));
             return shipping;
         } catch (SQLException e) {
             throw new RuntimeException("Error while searching for shipping", e);
-        }
-    }
-
-    @Override
-    public List<Shipping> getAll() {
-        try (Connection c = dataSource.getConnection()) {
-            String sql = "SELECT id, user_id, country, city, zipcode, address FROM shipping";
-            ResultSet rs = c.createStatement().executeQuery(sql);
-            List<Shipping> shippingList = new ArrayList<>();
-            while (rs.next()) {
-                Shipping shipping = new Shipping(rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6));
-                shipping.setId(rs.getInt(1));
-                shippingList.add(shipping);
-            }
-            return shippingList;
-        } catch (SQLException e) {
-            throw new RuntimeException("Error while getting all shippings", e);
         }
     }
 
