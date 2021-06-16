@@ -18,8 +18,8 @@ CREATE TABLE categories (
     department text
 );
 
-DROP TABLE IF EXISTS public.cart;
-CREATE TABLE cart (
+DROP TABLE IF EXISTS public.carts;
+CREATE TABLE carts (
     id serial NOT NULL PRIMARY KEY,
     FOREIGN KEY (user_id) REFERENCES users(id),
     product_id int[]
@@ -47,7 +47,7 @@ CREATE TABLE orders (
     date date,
     paid boolean,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
+    FOREIGN KEY (cart_id) REFERENCES carts(id)
 );
 
 
