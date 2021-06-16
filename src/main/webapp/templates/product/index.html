@@ -28,23 +28,35 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <script src="/static/js/cart.js" defer></script>
     <script src="/static/js/login.js" defer></script>
+
     <script src="/static/js/register.js" defer></script>
     <script src="/static/js/logout.js" defer></script>
+
+    <script src="/static/js/billinginfo.js" defer></script>
+
 </head>
 
 <body>
 
 <div class="headerDiv">
-    <div class="user">
+<div class="user">
         <h3 th:if="${session.loggedIn}" th:text="'You are logged in as ' + ${session.email}"></h3>
         <button th:if="${session.loggedIn}" type="button" id="logout">Log out</button>
         <button th:unless="${session.loggedIn}" type="button" id="login">Login</button>
         <button th:unless="${session.loggedIn}" type="button" id="register">Registration</button>
         <p th:if="${session.missedPassword}">Wrong email or password</p>
+
+    <div th:if="${session.loggedin}" class="billing">
+        <button type="button" id="billing">Billing info</button>
+    </div>
+    <div class="login">
+        <button type="button" id="login">Login</button>
+
     </div>
 </div>
 
-<div class="cart">
+<div th:if="${cartsize != null}" class="cart">
+
     <ul class="cartitems"></ul><br>
     <a class="toPageBtn" id="cart" href="/cart">Cart</a>
 </div>
@@ -86,7 +98,7 @@
                     <div class="card-text">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div class="card-text">
+                    <div th:if="${cartsize != null}" class="card-text">
                         <a class="add-to-cart" th:id="${prod.getId()}" href="#">Add to cart</a>
                     </div>
                 </div>

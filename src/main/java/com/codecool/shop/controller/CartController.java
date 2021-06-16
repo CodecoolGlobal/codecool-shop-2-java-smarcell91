@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.DaoManager;
@@ -28,13 +29,16 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String email = session.getAttribute("email").toString();
+        int userId = Integer.parseInt(session.getAttribute("id").toString());
         if ("add".equals(request.getRequestURI().split("/")[2])) {
-            cdm.add(pdm.find(Integer.parseInt(request.getParameter("id"))));
+            cartDao.add(productDao.find(Integer.parseInt(request.getParameter("id"))), userId);
         } else if ("remove".equals(request.getRequestURI().split("/")[2])) {
-            cdm.remove(Integer.parseInt(request.getParameter("id")));
+            cartDao.remove(Integer.parseInt(request.getParameter("id")), userId);
             response.sendRedirect("/cart");
         } else if ("decrement".equals(request.getRequestURI().split("/")[2])) {
-            cdm.decrementAmount(pdm.find(Integer.parseInt(request.getParameter("id"))));
+            cartDao.decrementAmount(Integer.parseInt(request.getParameter("id")), userId);
         }
     }
 }

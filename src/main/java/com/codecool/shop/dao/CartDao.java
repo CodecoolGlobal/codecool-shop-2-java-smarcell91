@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface CartDao {
-    void add(Product product);
-    Product find(int id);
-    void remove(int id);
-    void decrementAmount(Product product);
-
-    Map<Product, Integer> getCart();
-    void setCart(Map<Product, Integer> cart);
-    List<String> getProductsNames();
-    int getCartSize();
+    void add(Product product, int userId);
+    Product find(int productId, int userId);
+    void remove(int productId, int userId);
+    void decrementAmount(int productId, int userId);
+    float getPriceSum(int userId);
+    List<Product> getCart(int userId);
+    void setCart(int userId);
 }

@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.ServletException;
@@ -24,7 +25,10 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DaoManager daoManager = DaoManager.getInstance();
+        UserDao userDao = daoManager.getUserDao();
         HttpSession session = request.getSession();
+
         boolean isCorrectUser = false;
         boolean missedPassword = false;
         String emailInput = request.getParameter("email");
@@ -42,6 +46,7 @@ public class LoginController extends HttpServlet {
         session.setAttribute("loggedIn", isCorrectUser);
         session.setAttribute("email", emailInput);
         session.setAttribute("missedPassword", missedPassword);
+
         response.sendRedirect(request.getContextPath());
     }
 

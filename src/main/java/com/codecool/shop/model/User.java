@@ -29,6 +29,10 @@ public class User {
         this.salt = salt;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -48,5 +52,11 @@ public class User {
     public String getSalt() {
         return salt;
     }
+}
+
+    public int getId() {
+        return id;
+    }
+
 }
 
