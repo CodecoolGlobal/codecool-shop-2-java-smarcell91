@@ -1,7 +1,7 @@
 
 DROP TABLE IF EXISTS public.products;
 CREATE TABLE products (
-    PRIMARY KEY id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     name text,
     description text,
     currency text,
@@ -12,7 +12,7 @@ CREATE TABLE products (
 
 DROP TABLE IF EXISTS public.categories;
 CREATE TABLE categories (
-    PRIMARY KEY id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     name text,
     description text,
     department text
@@ -20,20 +20,22 @@ CREATE TABLE categories (
 
 DROP TABLE IF EXISTS public.cart;
 CREATE TABLE cart (
-
+    id serial NOT NULL PRIMARY KEY,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    product_id int[]
 )
 
 
 DROP TABLE IF EXISTS public.suppliers;
 CREATE TABLE suppliers (
-    PRIMARY KEY id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     name text,
     description text
 );
 
 DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
-    PRIMARY KEY id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     name text,
     email text,
     pw_hash text
@@ -41,10 +43,11 @@ CREATE TABLE users (
 
 DROP TABLE IF EXISTS public.orders;
 CREATE TABLE orders (
-    PRIMARY KEY id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
     date date,
     paid boolean,
-    products text
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (cart_id) REFERENCES cart(id)
 );
 
 
