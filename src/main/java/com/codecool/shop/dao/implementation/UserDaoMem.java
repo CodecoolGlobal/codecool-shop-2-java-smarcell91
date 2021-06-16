@@ -35,6 +35,13 @@ public class UserDaoMem implements UserDao {
         return null;
     }
 
+    public User findByEmail(String email) {
+        for (User user: users) {
+            if (user.getEmail().equals(email)) return user;
+        }
+        return null;
+    }
+
     public void remove(int id) {
         for (User user: users) {
             if (user.getId() == id) users.remove(user);

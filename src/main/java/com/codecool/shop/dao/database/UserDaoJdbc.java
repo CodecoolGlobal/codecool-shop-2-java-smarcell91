@@ -49,6 +49,23 @@ public class UserDaoJdbc implements UserDao{
         }
     }
 
+    @Override
+    public User findByEmail(String email) {
+        try (Connection c = dataSource.getConnection()) {
+            String sql = "SELECT id, first_name, last_name, email, pw_hash FROM users WHERE email = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while getting game state with id: " + id + e);
+        }
+    }
+
     public void remove(int id) {
         try (Connection c = dataSource.getConnection()){
         String sql = "DELETE FROM Table WHERE name = ?";
