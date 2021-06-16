@@ -55,7 +55,8 @@ CREATE TABLE suppliers (
 DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
-    name text,
+    first_name text,
+    last_name text,
     email text,
     pw_hash text,
     salt text
@@ -70,40 +71,40 @@ CREATE TABLE orders (
     cart_id int
 );
 
-ALTER TABLE products
-ADD CONSTRAINT fk_products_categories
-FOREIGN KEY (category_id) 
-REFERENCES categories (id);
+--ALTER TABLE products
+--ADD CONSTRAINT fk_products_categories
+--FOREIGN KEY (category_id)
+--REFERENCES categories (id);
+--
+--ALTER TABLE products
+--ADD CONSTRAINT fk_products_suppliers
+--FOREIGN KEY (supplier_id)
+--REFERENCES suppliers (id);
 
-ALTER TABLE products
-ADD CONSTRAINT fk_products_suppliers
-FOREIGN KEY (supplier_id) 
-REFERENCES suppliers (id);
-
-ALTER TABLE carts
-ADD CONSTRAINT fk_carts_users
-FOREIGN KEY (user_id)
-REFERENCES users(id);
-
-ALTER TABLE orders
-ADD CONSTRAINT fk_orders_users
-FOREIGN KEY (user_id)
-REFERENCES users(id);
-
-ALTER TABLE orders
-ADD CONSTRAINT fk_orders_carts
-FOREIGN KEY (cart_id)
-REFERENCES carts(id);
-
-ALTER TABLE shipping
-ADD CONSTRAINT fk_shipping_users
-FOREIGN KEY (user_id)
-REFERENCES users(id);
-
-ALTER TABLE billing
-ADD CONSTRAINT fk_billing_users
-FOREIGN KEY (user_id)
-REFERENCES users(id);
+--ALTER TABLE carts
+--ADD CONSTRAINT fk_carts_users
+--FOREIGN KEY (user_id)
+--REFERENCES users(id);
+--
+--ALTER TABLE orders
+--ADD CONSTRAINT fk_orders_users
+--FOREIGN KEY (user_id)
+--REFERENCES users(id);
+--
+--ALTER TABLE orders
+--ADD CONSTRAINT fk_orders_carts
+--FOREIGN KEY (cart_id)
+--REFERENCES carts(id);
+--
+--ALTER TABLE shipping
+--ADD CONSTRAINT fk_shipping_users
+--FOREIGN KEY (user_id)
+--REFERENCES users(id);
+--
+--ALTER TABLE billing
+--ADD CONSTRAINT fk_billing_users
+--FOREIGN KEY (user_id)
+--REFERENCES users(id);
 
 
 INSERT INTO suppliers (id, name, description) 

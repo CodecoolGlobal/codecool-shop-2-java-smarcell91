@@ -30,20 +30,25 @@ public class CartProducts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int userId = Integer.parseInt(session.getAttribute("userId").toString());
+        boolean isSessionId = session.getAttribute("userId") != null;
         String cartJsonString = "";
-        if ("name".equals(request.getRequestURI().split("/")[2])) {
-            List<String> products = new ArrayList<>();
-            for (Product product: cdm.getCart(userId)) {
-                products.add(product.getName());
+
+        if (isSessionId) {
+            int userId = Integer.parseInt(session.getAttribute("userId").toString());
+            if ("name".equals(request.getRequestURI().split("/")[2])) {
+                List<String> products = new ArrayList<>();
+                for (Product product : cdm.getCart(userId)) {
+                    products.add(product.getName());
+                }
+
+                cartJsonString = this.gson.toJson(products);
+            } else if ("price".equals(request.getRequestURI().split("/")[2])) {
+                float total = cdm.getPriceSum(userId);
+                cartJsonString = this.gson.toJson(total);
+            } else if ("size".equals(request.getRequestURI().split("/")[2])) {
+                int size = cdm.getCart(userId).size();
+                cartJsonString = this.gson.toJson(size);
             }
-            cartJsonString = this.gson.toJson(products);
-        } else if ("price".equals(request.getRequestURI().split("/")[2])) {
-            float total = cdm.getPriceSum(userId);
-            cartJsonString = this.gson.toJson(total);
-        } else if ("size".equals(request.getRequestURI().split("/")[2])) {
-            int size = cdm.getCart(userId).size();
-            cartJsonString = this.gson.toJson(size);
         }
         PrintWriter out = response.getWriter();
         

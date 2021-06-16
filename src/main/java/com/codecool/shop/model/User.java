@@ -20,7 +20,7 @@ public class User {
         this.salt = salt;
     }
 
-    public User(int id, String firstName, String lastName, String email, String pwHash, String salt) {
+    public User(int id, String firstName, String lastName, String email, String pwHash) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,7 +52,7 @@ public class User {
     public String getSalt() {
         return salt;
     }
-}
+
 
     public int getId() {
         return id;

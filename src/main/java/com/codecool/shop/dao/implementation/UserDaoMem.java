@@ -23,30 +23,35 @@ public class UserDaoMem implements UserDao {
         return instance;
     }
 
+    @Override
     public void add(User user) {
         user.setId(users.size()+1);
         users.add(user);
     }
 
+    @Override
     public User find(int id) {
         for (User user: users) {
             if (user.getId() == id) return user;
         }
         return null;
     }
-
-    public User findByEmail(String email) {
+    @Override
+    public User find(String email) {
         for (User user: users) {
             if (user.getEmail().equals(email)) return user;
         }
         return null;
     }
 
+    @Override
     public void remove(int id) {
         for (User user: users) {
             if (user.getId() == id) users.remove(user);
         }
     }
+
+    @Override
     public List<User> allUser() {
         return users;
     }

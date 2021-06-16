@@ -17,17 +17,19 @@ public class UserDaoJdbc implements UserDao{
     }
     @Override
     public void add(User user) {
+        System.out.println(user.getEmail() + "  " + user.getFirstName());
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO users (first_name, last_name, email, pw_hash) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO users (first_name, last_name, email, pw_hash, salt) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, user.getFirstName());
             st.setString(2, user.getLastName());
             st.setString(3, user.getEmail());
             st.setString(4, user.getPwHash());
+            st.setString(5, user.getSalt());
             st.executeUpdate();
 
         } catch (SQLException throwables) {
-            throw new RuntimeException("Error while adding new game state", throwables);
+            throw new RuntimeException("Error ", throwables);
         }
     }
 
@@ -50,7 +52,7 @@ public class UserDaoJdbc implements UserDao{
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User find(String email) {
         try (Connection c = dataSource.getConnection()) {
             String sql = "SELECT id, first_name, last_name, email, pw_hash FROM users WHERE email = ?";
             PreparedStatement ps = c.prepareStatement(sql);

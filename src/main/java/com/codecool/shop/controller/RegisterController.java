@@ -25,7 +25,7 @@ import javax.activation.*;
 
 @WebServlet(name = "registerController", urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
-    private DaoManager daoManager = new DaoManager();
+    private DaoManager daoManager = DaoManager.getInstance();
     private UserDao userDao = daoManager.getUserDao();
     private String salt = "";
 

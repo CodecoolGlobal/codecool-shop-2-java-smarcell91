@@ -20,7 +20,7 @@ import java.security.spec.KeySpec;
 
 @WebServlet(name = "loginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
-    DaoManager daoManager = new DaoManager();
+    DaoManager daoManager = DaoManager.getInstance();
     UserDao userDao = daoManager.getUserDao();
 
     @Override
