@@ -1,16 +1,35 @@
 package com.codecool.shop.dao.database;
 
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 
+import javax.sql.DataSource;
 import java.util.List;
 
-public class ProductCategoryDaoJdbc {
+public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
+    private DataSource dataSource;
+
+    public ProductCategoryDaoJdbc(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Override
     public void add(ProductCategory category) {
 
     }
-    ProductCategory find(int id);
-    void remove(int id);
+    @Override
+    public ProductCategory find(int id) {
+        return null;
+    }
 
-    List<ProductCategory> getAll();
+    @Override
+    public void remove(int id) {
+
+    }
+
+    @Override
+    public List<ProductCategory> getAll() {
+        return null;
+    }
 }
