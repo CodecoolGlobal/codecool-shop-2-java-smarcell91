@@ -57,7 +57,8 @@ CREATE TABLE users (
     id serial NOT NULL PRIMARY KEY,
     name text,
     email text,
-    pw_hash text
+    pw_hash text,
+    salt text
 );
 
 DROP TABLE IF EXISTS public.orders;

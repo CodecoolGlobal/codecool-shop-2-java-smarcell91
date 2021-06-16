@@ -10,20 +10,23 @@ public class User {
     private String lastName;
     private String email;
     private String pwHash;
+    private String salt;
 
-    public User(String firstName, String lastName, String email, String pwHash) {
+    public User(String firstName, String lastName, String email, String pwHash, String salt) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.pwHash = pwHash;
+        this.salt = salt;
     }
 
-    public User(int id, String firstName, String lastName, String email, String pwHash) {
+    public User(int id, String firstName, String lastName, String email, String pwHash, String salt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.pwHash = pwHash;
+        this.salt = salt;
     }
 
     public void setId(int id) {
@@ -45,6 +48,11 @@ public class User {
     public String getPwHash() {
         return pwHash;
     }
+    
+    public String getSalt() {
+        return salt;
+    }
+}
 
     public int getId() {
         return id;
