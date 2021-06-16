@@ -25,6 +25,26 @@ CREATE TABLE carts (
     product_id int[]
 );
 
+DROP TABLE IF EXISTS public.billing;
+CREATE TABLE billing (
+    id serial NOT NULL PRIMARY KEY,
+    user_id int,
+    country text,
+    city text,
+    zipcode int,
+    address text
+);
+
+DROP TABLE IF EXISTS public.shipping;
+CREATE TABLE shipping (
+    id serial NOT NULL PRIMARY KEY,
+    user_id int,
+    country text,
+    city text,
+    zipcode int,
+    address text
+);
+
 DROP TABLE IF EXISTS public.suppliers;
 CREATE TABLE suppliers (
     id serial NOT NULL PRIMARY KEY,
@@ -73,3 +93,13 @@ ALTER TABLE orders
 ADD CONSTRAINT fk_orders_carts
 FOREIGN KEY (cart_id)
 REFERENCES carts(id);
+
+ALTER TABLE shipping
+ADD CONSTRAINT fk_shipping_users
+FOREIGN KEY (user_id)
+REFERENCES users(id);
+
+ALTER TABLE billing
+ADD CONSTRAINT fk_billing_users
+FOREIGN KEY (user_id)
+REFERENCES users(id);
