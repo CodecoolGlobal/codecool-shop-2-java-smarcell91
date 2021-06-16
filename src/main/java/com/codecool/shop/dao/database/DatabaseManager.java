@@ -14,7 +14,7 @@ public class DatabaseManager {
     private ProductCategoryDao productCategoryDao;
     private CartDao cartDao;
 
-    public DatabaseManager (String database, String user, String password) {
+    public DatabaseManager (String database, String user, String password) throws SQLException {
         DataSource dataSource = connect(database, user, password);
         orderDao = new OrderDaoJdbc(dataSource);
         productDao = new ProductDaoJdbc(dataSource);
