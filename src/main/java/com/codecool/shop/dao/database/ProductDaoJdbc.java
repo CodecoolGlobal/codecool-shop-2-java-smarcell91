@@ -58,7 +58,7 @@ public class ProductDaoJdbc implements ProductDao {
             throw new RuntimeException("Error while searching for product", e);
         }
     }
-    
+
     @Override
     public List<Product> getAll() {
         try (Connection c = dataSource.getConnection()) {

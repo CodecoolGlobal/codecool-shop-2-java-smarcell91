@@ -52,7 +52,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             throw new RuntimeException("Error while searching for supplier", e);
         }
     }
-    
+
     @Override
     public List<Supplier> getAll() {
         try (Connection c = dataSource.getConnection()) {
