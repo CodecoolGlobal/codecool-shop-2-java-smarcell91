@@ -27,10 +27,10 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DaoManager daoManager = new DaoManager();
+        DaoManager daoManager = DaoManager.getInstance();
         daoManager.setup();
         ProductDao productDataStore = daoManager.getProductDao();
-        CartDaoMem cartDaoMem = daoManager.get
+        // CartDaoMem cartDaoMem = daoManager.get
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
