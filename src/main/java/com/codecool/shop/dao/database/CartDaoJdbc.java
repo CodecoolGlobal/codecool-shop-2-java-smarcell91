@@ -23,25 +23,13 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public void add(Product product, int userId) {
         try (Connection conn = dataSource.getConnection()) {
-            String table = "create table IF NOT EXISTS cart"+userId+" (" + "product_id INT," + "quantity INT," +")";
+            String table = "create table IF NOT EXISTS cart"+userId+" (" + "product_id INT," +")";
 
-            String sql = """
-                        GO
-                        IF NOT EXISTS ( select 1 from ? where product_id = ? )
-                        BEGIN
-                        INSERT INTO ?(product_id, qunatity) VALUES (?, 0);
-                        END
-                        ELSE
-                        UPDATE ? SET quantity = quantity + 1 WHERE product_id = ?
-                        GO""";
+            String sql = "INSERT INTO ?(product_id) VALUES (?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.execute(table);
             st.setString(1, "cart"+userId);
             st.setInt(2, product.getId());
-            st.setString(3, "cart"+userId);
-            st.setInt(4, product.getId());
-            st.setString(5, "cart"+userId);
-            st.setInt(6, product.getId());
             st.executeUpdate();
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding "+product.getId()+" product to cart"+userId+" cart.", throwables);
@@ -65,6 +53,16 @@ public class CartDaoJdbc implements CartDao {
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading all players", e);
         }
+    }
+
+    @Override
+    public float getPriceSum(int userId) {
+        float maxSum = 0;
+        List<Product> products = getCart(userId);
+        for (Product product: products) {
+            maxSum += product.getDefaultPrice();
+        }
+        return maxSum;
     }
 
     @Override
@@ -95,14 +93,21 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public List<Product> getCart(int userId) {
         try (Connection c = dataSource.getConnection()) {
-            String sql = "SELECT product_id FROM ? ";
+            String sql = """
+                SELECT 
+                products.name, products.description, default_price, category_id, supplier_id, currency, categories.name, categories.description, categories.department, suppliers.name, suppliers.description 
+                FROM ? cart 
+                JOIN products ON cart.product_id = products.id
+                JOIN categories ON products.category_id = categories.id 
+                JOIN suppliers ON products.supplier_id = suppliers.id 
+                WHERE products.id = ?""";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, "cart"+userId);
             ResultSet rs = ps.executeQuery();
             List<Product> result = new ArrayList<>();
             while (rs.next()) { // while result set pointer is positioned before or on last row read authors
                 // get product by id and create a product object
-                Product product = new Product()  //(rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getInt(7));
+                Product product = new Product(rs.getString(1), rs.getFloat(3), rs.getString(6), rs.getString(2), new ProductCategory(rs.getString(7), rs.getString(9), rs.getString(8)), new Supplier(rs.getString(10), rs.getString(11)));
                 product.setId(rs.getInt(1));
                 result.add(product);
             }
@@ -113,7 +118,14 @@ public class CartDaoJdbc implements CartDao {
     }
 
     @Override
-    public void setCart(Map<Integer, List<Product>> cart) {
-
+    public void setCart(int userId) {
+        try (Connection c = dataSource.getConnection()){
+            String sql = "DROP TABLE ?";
+            PreparedStatement st = c.prepareStatement(sql);
+            st.setString(1, "cart"+userId);
+            st.executeUpdate();
+        } catch(SQLException e) {
+            System.out.println(e);
+        }
     }
 }

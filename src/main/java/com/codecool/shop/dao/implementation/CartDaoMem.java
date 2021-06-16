@@ -108,8 +108,12 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public void setCart(Map<Integer, List<Product>> cart) {
-        this.cart = cart;
+    public void setCart(int userId) {
+        for (Map.Entry<Integer, List<Product>> entry : cart.entrySet()) {
+            if (entry.getKey() == userId) {
+                entry.setValue(new ArrayList<>());
+            }
+        }
     }
 
 }

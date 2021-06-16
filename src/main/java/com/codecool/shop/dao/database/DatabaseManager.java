@@ -13,6 +13,8 @@ public class DatabaseManager {
     private SupplierDao supplierDao;
     private ProductCategoryDao productCategoryDao;
     private CartDao cartDao;
+    private BillingDao billingDao;
+    private ShippingDao shippingDao;
 
     public DatabaseManager (String database, String user, String password) throws SQLException {
         DataSource dataSource = connect(database, user, password);
@@ -22,6 +24,8 @@ public class DatabaseManager {
         supplierDao = new SupplierDaoJdbc(dataSource);
         productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
         cartDao = new CartDaoJdbc(dataSource);
+        billingDao = new BillingDaoJdbc(dataSource);
+        shippingDao = new ShippingDaoJdbc(dataSource);
     }
 
     public OrderDao getOrderDao() {
@@ -46,6 +50,14 @@ public class DatabaseManager {
 
     public CartDao getCartDao() {
         return cartDao;
+    }
+
+    public BillingDao getBillingDao() {
+        return billingDao;
+    }
+
+    public ShippingDao getShippingDao() {
+        return shippingDao;
     }
 
     private DataSource connect(String database, String user, String password) throws SQLException {

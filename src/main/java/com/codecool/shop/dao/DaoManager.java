@@ -19,7 +19,13 @@ public class DaoManager {
     private SupplierDao supplierDao;
     private UserDao userDao;
     private CartDao cartDao;
+    private BillingDao billingDao;
+    private ShippingDao shippingDao;
     private static DaoManager instance = null;
+
+    private DaoManager() {
+
+    }
 
     public static DaoManager getInstance() {
         if (instance == null) {
@@ -43,6 +49,8 @@ public class DaoManager {
                 supplierDao = dbManager.getSupplierDao();
                 userDao = dbManager.getUserDao();
                 cartDao = dbManager.getCartDao();
+                billingDao = dbManager.getBillingDao();
+                shippingDao = dbManager.getShippingDao();
             }
             else {
                 orderDao = OrderDaoMem.getInstance();
@@ -51,6 +59,8 @@ public class DaoManager {
                 supplierDao = SupplierDaoMem.getInstance();
                 userDao = UserDaoMem.getInstance();
                 cartDao = CartDaoMem.getInstance();
+                billingDao = BillingDaoMem.getInstance();
+                shippingDao = ShippingDaoMem.getInstance();
             }
         }
         catch (Exception e) {
@@ -80,5 +90,13 @@ public class DaoManager {
 
     public CartDao getCartDao() {
         return cartDao;
+    }
+
+    public BillingDao getBillingDao() {
+        return billingDao;
+    }
+
+    public ShippingDao getShippingDao() {
+        return shippingDao;
     }
 }

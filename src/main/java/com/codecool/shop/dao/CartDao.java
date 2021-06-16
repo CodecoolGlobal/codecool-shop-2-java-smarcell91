@@ -12,5 +12,5 @@ public interface CartDao {
     void decrementAmount(int productId, int userId);
     float getPriceSum(int userId);
     List<Product> getCart(int userId);
-    void setCart(Map<Integer, List<Product>> cart);
+    void setCart(int userId);
 }

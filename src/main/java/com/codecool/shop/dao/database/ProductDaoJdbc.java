@@ -70,6 +70,9 @@ public class ProductDaoJdbc implements ProductDao {
                 product.setId(rs.getInt(1));
                 productList.add(product);
             }
+//            Product product = new Product("valami", 4.9f, "$", "test", new ProductCategory("Clothes", "valami ez is", "meg ez is"), new Supplier("Nike", "Clothes"));
+//            productList.add(product);
+//            System.out.println("ITTTTTT" + product.getName());
             return productList;
         } catch (SQLException e) {
             throw new RuntimeException("Error while getting all products", e);
