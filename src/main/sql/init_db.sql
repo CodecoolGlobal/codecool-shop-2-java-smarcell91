@@ -1,18 +1,18 @@
 
 DROP TABLE IF EXISTS public.products;
 CREATE TABLE products (
-    id serial NOT NULL,
+    PRIMARY KEY id serial NOT NULL,
     name text,
     description text,
     currency text,
     default_price float,
-    category_id int,
-    supplier_id int
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
 );
 
 DROP TABLE IF EXISTS public.categories;
 CREATE TABLE categories (
-    id serial NOT NULL,
+    PRIMARY KEY id serial NOT NULL,
     name text,
     description text,
     department text
@@ -26,14 +26,14 @@ CREATE TABLE cart (
 
 DROP TABLE IF EXISTS public.suppliers;
 CREATE TABLE suppliers (
-    id serial NOT NULL,
+    PRIMARY KEY id serial NOT NULL,
     name text,
     description text
 );
 
 DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
-    id serial NOT NULL,
+    PRIMARY KEY id serial NOT NULL,
     name text,
     email text,
     pw_hash text
@@ -41,7 +41,7 @@ CREATE TABLE users (
 
 DROP TABLE IF EXISTS public.orders;
 CREATE TABLE orders (
-    id serial NOT NULL,
+    PRIMARY KEY id serial NOT NULL,
     date date,
     paid boolean,
     products text
