@@ -18,6 +18,12 @@ CREATE TABLE categories (
     department text
 );
 
+DROP TABLE IF EXISTS public.cart;
+CREATE TABLE cart (
+
+)
+
+
 DROP TABLE IF EXISTS public.suppliers;
 CREATE TABLE suppliers (
     id serial NOT NULL,

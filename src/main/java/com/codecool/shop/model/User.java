@@ -26,6 +26,10 @@ public class User {
         this.pwHash = pwHash;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -41,4 +45,10 @@ public class User {
     public String getPwHash() {
         return pwHash;
     }
+
+    public int getId() {
+        return id;
+    }
+
+}
 
