@@ -6,8 +6,8 @@ CREATE TABLE products (
     description text,
     currency text,
     default_price float,
-    FOREIGN KEY (category_id) REFERENCES categories(id),
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+    category_id int,
+    supplier_id int
 );
 
 DROP TABLE IF EXISTS public.categories;
@@ -21,10 +21,9 @@ CREATE TABLE categories (
 DROP TABLE IF EXISTS public.carts;
 CREATE TABLE carts (
     id serial NOT NULL PRIMARY KEY,
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    user_id int,
     product_id int[]
-)
-
+);
 
 DROP TABLE IF EXISTS public.suppliers;
 CREATE TABLE suppliers (
@@ -46,8 +45,31 @@ CREATE TABLE orders (
     id serial NOT NULL PRIMARY KEY,
     date date,
     paid boolean,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (cart_id) REFERENCES carts(id)
+    user_id int,
+    cart_id int
 );
 
+ALTER TABLE products
+ADD CONSTRAINT fk_products_categories
+FOREIGN KEY (category_id) 
+REFERENCES categories (id);
 
+ALTER TABLE products
+ADD CONSTRAINT fk_products_suppliers
+FOREIGN KEY (supplier_id) 
+REFERENCES suppliers (id);
+
+ALTER TABLE carts
+ADD CONSTRAINT fk_carts_users
+FOREIGN KEY (user_id)
+REFERENCES users(id);
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_users
+FOREIGN KEY (user_id)
+REFERENCES users(id);
+
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_carts
+FOREIGN KEY (cart_id)
+REFERENCES carts(id);
