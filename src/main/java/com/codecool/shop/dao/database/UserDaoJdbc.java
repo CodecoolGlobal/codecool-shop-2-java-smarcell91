@@ -2,6 +2,7 @@ package com.codecool.shop.dao.database;
 
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.ErrorLogger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -29,6 +30,7 @@ public class UserDaoJdbc implements UserDao{
             st.executeUpdate();
 
         } catch (SQLException throwables) {
+            ErrorLogger.logError(UserDaoJdbc.class, "Error while adding user: " + throwables.toString());
             throw new RuntimeException("Error ", throwables);
         }
     }
@@ -47,6 +49,7 @@ public class UserDaoJdbc implements UserDao{
             User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             return user;
         } catch (SQLException e) {
+            ErrorLogger.logError(UserDaoJdbc.class, "Error while searching for user with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while getting game state with id: " + id + e);
         }
     }
@@ -64,6 +67,7 @@ public class UserDaoJdbc implements UserDao{
             User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
             return user;
         } catch (SQLException e) {
+            ErrorLogger.logError(UserDaoJdbc.class, "Error while searching for user with email " + email + ": " + e.toString());
             throw new RuntimeException("Error " + e);
         }
     }
@@ -75,7 +79,8 @@ public class UserDaoJdbc implements UserDao{
         st.setInt(1, id);
         st.executeUpdate();
         } catch(SQLException e) {
-            System.out.println(e);
+            ErrorLogger.logError(UserDaoJdbc.class, "Error while removing user with id " + id + ": " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 
@@ -90,6 +95,7 @@ public class UserDaoJdbc implements UserDao{
             }
             return result;
         } catch (SQLException e) {
+            ErrorLogger.logError(UserDaoJdbc.class, "Error while getting all users: " + e.toString());
             throw new RuntimeException("Error while getting all game states", e);
         }
     }

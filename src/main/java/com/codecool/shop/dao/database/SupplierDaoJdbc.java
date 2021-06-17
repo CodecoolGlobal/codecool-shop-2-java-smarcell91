@@ -2,6 +2,8 @@ package com.codecool.shop.dao.database;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.service.ErrorLogger;
+
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -31,6 +33,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             rs.next();
             supplier.setId(rs.getInt(1));
         } catch (SQLException e) {
+            ErrorLogger.logError(SupplierDaoJdbc.class, "Error while adding supplier: " + e.toString());
             throw new RuntimeException("Error while adding new supplier", e);
         }
     }
@@ -49,6 +52,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             supplier.setId(id);
             return supplier;
         } catch (SQLException e) {
+            ErrorLogger.logError(SupplierDaoJdbc.class, "Error while searching for supplier with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while searching for supplier", e);
         }
     }
@@ -66,6 +70,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             }
             return supplierList;
         } catch (SQLException e) {
+            ErrorLogger.logError(SupplierDaoJdbc.class, "Error while getting all suppliers: " + e.toString());
             throw new RuntimeException("Error while getting all suppliers", e);
         }
     }
@@ -78,6 +83,7 @@ public class SupplierDaoJdbc implements SupplierDao {
             ps.setInt(1, id);
             ps.executeQuery();
         } catch (SQLException e) {
+            ErrorLogger.logError(SupplierDaoJdbc.class, "Error while removing supplier with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while removing supplier", e);
       }
     }
