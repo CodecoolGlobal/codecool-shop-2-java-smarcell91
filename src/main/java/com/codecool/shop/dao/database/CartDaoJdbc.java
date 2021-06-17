@@ -34,11 +34,9 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public void add(Product product, int userId) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "INSERT INTO ?(product_id) VALUES (?)";
-            PreparedStatement st = conn.prepareStatement(sql);
-            st.setString(1, "cart"+userId);
-            st.setInt(2, product.getId());
-            st.executeUpdate();
+            Statement st = conn.createStatement();
+            String sql = "INSERT INTO cart"+userId+"(product_id) VALUES ("+product.getId()+")";
+            st.executeUpdate(sql);
         } catch (SQLException throwables) {
             throw new RuntimeException("Error while adding "+product.getId()+" product to cart"+userId+" cart.", throwables);
         }

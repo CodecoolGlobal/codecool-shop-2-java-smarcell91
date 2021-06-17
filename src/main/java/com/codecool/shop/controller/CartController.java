@@ -30,8 +30,7 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String email = session.getAttribute("email").toString();
-        int userId = Integer.parseInt(session.getAttribute("id").toString());
+        int userId = Integer.parseInt(session.getAttribute("userId").toString());
         if ("add".equals(request.getRequestURI().split("/")[2])) {
             cartDao.add(productDao.find(Integer.parseInt(request.getParameter("id"))), userId);
         } else if ("remove".equals(request.getRequestURI().split("/")[2])) {
