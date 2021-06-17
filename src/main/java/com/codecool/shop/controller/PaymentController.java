@@ -8,6 +8,7 @@ import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Payment;
 import com.codecool.shop.model.Product;
 
+import com.codecool.shop.service.Json;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -38,6 +39,7 @@ public class PaymentController extends HttpServlet {
         UserDao userDao = daoManager.getUserDao();
         ShippingDao shippingDao = daoManager.getShippingDao();
         PaymentDao paymentDao = daoManager.getPaymentDao();
+        ProductDao productDao = daoManager.getProductDao();
 
         String payPalUserName = req.getParameter("payPalUsername");
         String payPalPW = req.getParameter("payPalPW");
@@ -58,7 +60,7 @@ public class PaymentController extends HttpServlet {
             Payment payment = new Payment(userId, payPalUserName, payPalPW);
             paymentDao.addPP(payment);
             orderDataStore.add(new Order(userId, productIdsToString(cartDataStore.getCart(userId))));
-//            orderDataStore.toJSON();
+//            Json.toJSON(userDao.find(userId), cartDataStore.getCart(userId), shippingDao.find(userId));
             cartDataStore.setCart(userId);
             resp.sendRedirect("/");
         }
@@ -68,6 +70,7 @@ public class PaymentController extends HttpServlet {
             Payment payment = new Payment(userId, cardNumber, cardHolder, expiryDate, cardCode);
             paymentDao.addCard(payment);
             orderDataStore.add(new Order(userId, productIdsToString(cartDataStore.getCart(userId))));
+//            Json.toJSON(userDao.find(userId), cartDataStore.getCart(userId), shippingDao.find(userId));
             cartDataStore.setCart(userId);
             resp.sendRedirect("/");
         }

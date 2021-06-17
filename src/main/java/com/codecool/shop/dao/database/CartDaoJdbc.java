@@ -123,14 +123,12 @@ public class CartDaoJdbc implements CartDao {
 
     @Override
     public void setCart(int userId) {
-        try (Connection c = dataSource.getConnection()){
-            String sql = "DROP TABLE ?";
-            PreparedStatement st = c.prepareStatement(sql);
-            st.setString(1, "cart"+userId);
-            st.executeUpdate();
-        } catch(SQLException e) {
-            ErrorLogger.logError(CartDaoJdbc.class, "Error while dropping table cart" + userId + ": " + e.toString());
-            throw new RuntimeException(e);
+        try (Connection conn = dataSource.getConnection()) {
+            Statement st = conn.createStatement();
+            String sql = "DELETE FROM cart"+userId;
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error ", e);
         }
     }
 }

@@ -30,23 +30,6 @@ public class OrderDaoMem implements OrderDao{
         return instance;
     }
 
-//    public void toJSON() throws IOException {
-//
-//        //You need to set the save folder!
-//        String path = "/home/marci/Asztal/";
-//
-//        String fileName = shipping.get("firstName") + "_" + shipping.get("lastName") + ".json";
-//        File file = new File(path + fileName);
-//        Gson gson = new Gson();
-//        Writer writer = Files.newBufferedWriter(Paths.get(path + fileName));
-//        gson.toJson(this, writer);
-//        writer.close();
-//    }
-
-//    public void sendEmail() {
-//
-//    }
-
     @Override
     public boolean isJustOrdered() {
         return justOrdered;
