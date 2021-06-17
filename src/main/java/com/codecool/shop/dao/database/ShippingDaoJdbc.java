@@ -66,4 +66,20 @@ public class ShippingDaoJdbc implements ShippingDao {
             throw new RuntimeException("Error while removing shipping", e);
       }
     }
+
+    @Override
+    public void update(Shipping shipping) {
+        try(Connection c = dataSource.getConnection()) {
+            String sql = "UPDATE shipping SET country = ?, city = ?, zipcode = ?, address = ? WHERE user_id = ?";
+            PreparedStatement st = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, shipping.getCountry());
+            st.setString(2, shipping.getCity());
+            st.setInt(3, shipping.getZipcode());
+            st.setString(4, shipping.getAddress());
+            st.setInt(5, shipping.getUserId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while updating new shipping", e);
+        }
+    }
 }

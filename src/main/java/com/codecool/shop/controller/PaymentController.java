@@ -77,8 +77,20 @@ public class PaymentController extends HttpServlet {
         else {
 //            context.setVariable("shipping", orderDataStore.getShipping());
             context.setVariable("priceSum", cartDataStore.getPriceSum(userId));
-            context.setVariable("cart", cartDataStore.getCart(userId));
+            context.setVariable("cart", sumOfProducts(cartDataStore.getCart(userId)));
             engine.process("product/payment.html", context, resp.getWriter());
         }
+
+    }
+    public Map<Product, Integer> sumOfProducts(List<Product> products) {
+        Map<Product, Integer> prodMap = new HashMap<>();
+        for (Product product: products) {
+            if (prodMap.containsKey(product)) {
+                prodMap.replace(product, prodMap.get(product) + 1);
+            } else {
+                prodMap.put(product, 1);
+            }
+        }
+        return prodMap;
     }
 }

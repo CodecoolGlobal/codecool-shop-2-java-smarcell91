@@ -64,6 +64,22 @@ public class BillingDaoJdbc implements BillingDao {
             ps.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException("Error while removing billing", e);
-      }
+        }
+    }
+
+    @Override
+    public void update(Billing billing) {
+        try(Connection c = dataSource.getConnection()) {
+            String sql = "UPDATE billing SET country = ?, city = ?, zipcode = ?, address = ? WHERE user_id = ?";
+            PreparedStatement st = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, billing.getCountry());
+            st.setString(2, billing.getCity());
+            st.setInt(3, billing.getZipcode());
+            st.setString(4, billing.getAddress());
+            st.setInt(5, billing.getUserId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while updating new shipping", e);
+        }
     }
 }

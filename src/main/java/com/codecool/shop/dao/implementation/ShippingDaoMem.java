@@ -45,4 +45,13 @@ public class ShippingDaoMem implements ShippingDao {
         }
         shippings.remove(shippingToRemove.getUserId());
     }
+
+    @Override
+    public void update(Shipping shipping) {
+        for (Map.Entry<Integer, Shipping> entry : shippings.entrySet()) {
+            if (entry.getKey() == shipping.getUserId()) {
+                entry.setValue(shipping);
+            }
+        }
+    }
 }

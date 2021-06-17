@@ -1,10 +1,11 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.model.Billing;
+import com.codecool.shop.model.Shipping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -27,15 +28,17 @@ public class CheckOutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        DaoManager daoManager = DaoManager.getInstance();
         HttpSession session = req.getSession();
-        int userId = Integer.parseInt(session.getAttribute("userId").toString());
-        CartDaoMem cartDataStore = CartDaoMem.getInstance();
-        OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
+        CartDao cartDataStore = daoManager.getCartDao();
+        OrderDao orderDataStore = daoManager.getOrderDao();
+        BillingDao billingDao = daoManager.getBillingDao();
+        ShippingDao shippingDao = daoManager.getShippingDao();
 
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
-        String email = req.getParameter("email");
-        String phone = req.getParameter("phonenum");
+//        String firstName = req.getParameter("firstName");
+//        String lastName = req.getParameter("lastName");
+//        String email = req.getParameter("email");
+//        String phone = req.getParameter("phonenum");
         String shippingCountry = req.getParameter("shippingCountry");
         String shippingCity = req.getParameter("shippingCity");
         String shippingZipcode = req.getParameter("shippingZipcode");
@@ -45,28 +48,28 @@ public class CheckOutController extends HttpServlet {
         String billingZipcode = req.getParameter("billingZipcode");
         String billingAddress = req.getParameter("billingAddress");
 
-        if (firstName != null) {
-            Map<String, String> shippingInfo = new HashMap<>();
-            shippingInfo.put("firstName", firstName);
-            shippingInfo.put("lastName", lastName);
-            shippingInfo.put("email", email);
-            shippingInfo.put("phone", phone);
-            shippingInfo.put("shippingCountry", shippingCountry);
-            shippingInfo.put("shippingCity", shippingCity);
-            shippingInfo.put("shippingZipcode", shippingZipcode);
-            shippingInfo.put("shippingAddress", shippingAddress);
-            shippingInfo.put("billingCountry", billingCountry);
-            shippingInfo.put("billingCity", billingCity);
-            shippingInfo.put("billingZipcode", billingZipcode);
-            shippingInfo.put("billingAddress", billingAddress);
-            orderDataStore.addShipping(shippingInfo);
-            orderDataStore.addCart(cartDataStore);
+        if (shippingCountry != null) {
+            int userId = Integer.parseInt(session.getAttribute("userId").toString());
+//            shippingInfo.put("firstName", firstName);
+//            shippingInfo.put("lastName", lastName);
+//            shippingInfo.put("email", email);
+//            shippingInfo.put("phone", phone);
+            Shipping shipping = new Shipping(shippingCountry, shippingCity, Integer.parseInt(shippingZipcode), shippingAddress, userId);
+            shippingDao.update(shipping);
+
+            Billing billing = new Billing(billingCountry, billingCity, Integer.parseInt(billingZipcode), billingAddress, userId);
+            billingDao.update(billing);
+//            orderDataStore.addCart(cartDataStore);
             resp.sendRedirect("/payment");
         }
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
-        context.setVariable("cart", cartDataStore.getCart(userId));
+        if (session.getAttribute("userId") != null) {
+            int userId = Integer.parseInt(session.getAttribute("userId").toString());
+            context.setVariable("billing", billingDao.find(userId));
+            context.setVariable("shipping", shippingDao.find(userId));
+            context.setVariable("cart", cartDataStore.getCart(userId));
+        }
 
         engine.process("product/checkout.html", context, resp.getWriter());
     }

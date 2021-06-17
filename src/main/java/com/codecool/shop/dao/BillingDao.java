@@ -6,4 +6,5 @@ public interface BillingDao {
     void add(Billing billing, int userId);
     Billing find(int userId);
     void remove(int id);
+    void update(Billing billing);
 }

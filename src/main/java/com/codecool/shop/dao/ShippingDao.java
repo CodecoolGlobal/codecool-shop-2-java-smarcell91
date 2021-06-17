@@ -6,4 +6,5 @@ public interface ShippingDao {
     void add(Shipping shipping, int userId);
     Shipping find(int userId);
     void remove(int id);
+    void update(Shipping shipping);
 }

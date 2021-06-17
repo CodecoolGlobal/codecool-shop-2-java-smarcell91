@@ -29,7 +29,6 @@ public class BillingController extends HttpServlet {
         int userId = (int)session.getAttribute("userId");
         BillingDao billingDataStore = daoManager.getBillingDao();
         ShippingDao shippingDataStore = daoManager.getShippingDao();
-        // TODO: billing info stay empty after checkbox
         String shippingCountry = req.getParameter("shippingCountry");
         String shippingCity = req.getParameter("shippingCity");
         String shippingZipcode = req.getParameter("shippingZipcode");

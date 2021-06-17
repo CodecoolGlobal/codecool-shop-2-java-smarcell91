@@ -42,68 +42,68 @@
 <div class="formBG">
     <div class="formDiv">
         <form action="/checkout" method="post">
-            <div id="personalData">
-                <h3 class="topicTitle">Personal</h3>
-                <div class="inputFields">
-                    <label for="firstName">First name:</label><br>
-                    <input type="text" name="firstName" id="firstName" autocomplete="off" required>
-                </div>
-                <div class="inputFields">
-                    <label for="lastName">Last name:</label><br>
-                    <input type="text" name="lastName" id="lastName" autocomplete="off" required>
-                </div>
-                <div class="inputFields">
-                    <label for="email">Email:</label><br>
-                    <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>
-                </div>
-                <div class="inputFields">
-                    <label for="phonenum">Phone:</label><br>
-                    <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>
-                </div>
-            </div>
+<!--            <div id="personalData">-->
+<!--                <h3 class="topicTitle">Personal</h3>-->
+<!--                <div class="inputFields">-->
+<!--                    <label for="firstName">First name:</label><br>-->
+<!--                    <input type="text" name="firstName" id="firstName" autocomplete="off" required>-->
+<!--                </div>-->
+<!--                <div class="inputFields">-->
+<!--                    <label for="lastName">Last name:</label><br>-->
+<!--                    <input type="text" name="lastName" id="lastName" autocomplete="off" required>-->
+<!--                </div>-->
+<!--                <div class="inputFields">-->
+<!--                    <label for="email">Email:</label><br>-->
+<!--                    <input type="email" name="email" id="email" autocomplete="off" required pattern="\S+"/>-->
+<!--                </div>-->
+<!--                <div class="inputFields">-->
+<!--                    <label for="phonenum">Phone:</label><br>-->
+<!--                    <input type="text" name="phonenum" id="phonenum" autocomplete="off" required>-->
+<!--                </div>-->
+<!--            </div>-->
             <div id="shippingData">
                 <hr>
                 <h3 class="topicTitle">Shipping address:</h3>
                 <div class="inputFields">
                     <label for="shippingCountry">Country:</label><br>
-                    <input type="text" name="shippingCountry" id="shippingCountry" autocomplete="off" required>
+                    <input type="text" name="shippingCountry" id="shippingCountry" th:value="${shipping.country}" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
                     <label for="shippingCity">City:</label><br>
-                    <input type="text" name="shippingCity" id="shippingCity" autocomplete="off" required>
+                    <input type="text" name="shippingCity" id="shippingCity" th:value="${shipping.city}" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
                     <label for="shippingZipcode">Zipcode:</label><br>
-                    <input type="text" name="shippingZipcode" id="shippingZipcode" autocomplete="off" required>
+                    <input type="text" name="shippingZipcode" id="shippingZipcode" th:value="${shipping.zipcode}" autocomplete="off" required>
                 </div>
                 <div class="inputFields">
                     <label for="shippingAddress">Address:</label><br>
-                    <input type="text" name="shippingAddress" id="shippingAddress" autocomplete="off" required>
+                    <input type="text" name="shippingAddress" id="shippingAddress" th:value="${shipping.address}" autocomplete="off" required>
                 </div>
-                <div class="inputFields">
-                    <input type="checkbox" name="sameAddress" id="sameAddress">
-                    <h5>Billing address is same as the shipping address!</h5>
-<!--                    <label for="sameAddress">Billing address is same as the shipping address!</label>-->
-                </div>
+<!--                <div class="inputFields">-->
+<!--                    <input type="checkbox" name="sameAddress" id="sameAddress">-->
+<!--                    <h5>Billing address is same as the shipping address!</h5>-->
+<!--&lt;!&ndash;                    <label for="sameAddress">Billing address is same as the shipping address!</label>&ndash;&gt;-->
+<!--                </div>-->
             </div>
             <div id="billingData">
                 <hr>
                 <h3 class="topicTitle">Billing address</h3>
                 <div class="inputFields">
                     <label for="billingCountry">Country:</label><br>
-                    <input type="text" name="billingCountry" id="billingCountry" autocomplete="off">
+                    <input type="text" name="billingCountry" id="billingCountry" th:value="${billing.country}" autocomplete="off">
                 </div>
                 <div class="inputFields">
                     <label for="billingCity">City:</label><br>
-                    <input type="text" name="billingCity" id="billingCity" autocomplete="off">
+                    <input type="text" name="billingCity" id="billingCity" th:value="${billing.city}" autocomplete="off">
                 </div>
                 <div class="inputFields">
                     <label for="billingCity">Zipcode:</label><br>
-                    <input type="text" name="billingZipcode" id="billingZipcode" autocomplete="off">
+                    <input type="text" name="billingZipcode" id="billingZipcode" th:value="${billing.zipcode}" autocomplete="off">
                 </div>
                 <div class="inputFields">
                     <label for="billingAddress">Address:</label><br>
-                    <input type="text" name="billingAddress" id="billingAddress" autocomplete="off">
+                    <input type="text" name="billingAddress" id="billingAddress" th:value="${billing.address}" autocomplete="off">
                 </div>
             </div>
             <button class="sendBtn" type="submit" id="submitCheckout">Go to Payment</button>

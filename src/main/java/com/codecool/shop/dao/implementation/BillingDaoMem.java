@@ -6,6 +6,7 @@ import java.util.Map;
 import com.codecool.shop.dao.BillingDao;
 import com.codecool.shop.model.Billing;
 
+
 public class BillingDaoMem implements BillingDao {
     Map<Integer, Billing> billings = new HashMap<>();
     private static BillingDaoMem instance = null;
@@ -44,5 +45,14 @@ public class BillingDaoMem implements BillingDao {
             }
         }
         billings.remove(billingToRemove.getUserId());
+    }
+
+    @Override
+    public void update(Billing billing) {
+        for (Map.Entry<Integer, Billing> entry : billings.entrySet()) {
+            if (entry.getKey() == billing.getUserId()) {
+                entry.setValue(billing);
+            }
+        }
     }
 }
