@@ -77,10 +77,9 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS public.orders;
 CREATE TABLE orders (
     id serial NOT NULL PRIMARY KEY,
-    date date,
-    paid boolean,
+    order_date date DEFAULT(CURRENT_DATE),
     user_id int,
-    cart_id int
+    product_ids text
 );
 
 --ALTER TABLE products
@@ -92,7 +91,7 @@ CREATE TABLE orders (
 --ADD CONSTRAINT fk_products_suppliers
 --FOREIGN KEY (supplier_id)
 --REFERENCES suppliers (id);
-
+--
 --ALTER TABLE carts
 --ADD CONSTRAINT fk_carts_users
 --FOREIGN KEY (user_id)

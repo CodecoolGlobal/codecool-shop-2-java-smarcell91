@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.controller.Cart;
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 import com.google.gson.Gson;
 
@@ -12,13 +13,13 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OrderDaoMem implements OrderDao{
     private boolean justOrdered = false;
-    CartDaoMem cart;
-    private Map<String, String> shipping = new HashMap<>();
-    private Map<String, String> payment = new HashMap<>();
+    private Map<Integer, Order> orders = new HashMap<>();
+
     private static OrderDaoMem instance = null;
 
 
@@ -29,18 +30,18 @@ public class OrderDaoMem implements OrderDao{
         return instance;
     }
 
-    public void toJSON() throws IOException {
-
-        //You need to set the save folder!
-        String path = "/home/marci/Asztal/";
-
-        String fileName = shipping.get("firstName") + "_" + shipping.get("lastName") + ".json";
-        File file = new File(path + fileName);
-        Gson gson = new Gson();
-        Writer writer = Files.newBufferedWriter(Paths.get(path + fileName));
-        gson.toJson(this, writer);
-        writer.close();
-    }
+//    public void toJSON() throws IOException {
+//
+//        //You need to set the save folder!
+//        String path = "/home/marci/Asztal/";
+//
+//        String fileName = shipping.get("firstName") + "_" + shipping.get("lastName") + ".json";
+//        File file = new File(path + fileName);
+//        Gson gson = new Gson();
+//        Writer writer = Files.newBufferedWriter(Paths.get(path + fileName));
+//        gson.toJson(this, writer);
+//        writer.close();
+//    }
 
 //    public void sendEmail() {
 //
@@ -56,29 +57,19 @@ public class OrderDaoMem implements OrderDao{
         this.justOrdered = justOrdered;
     }
 
-    public CartDaoMem getCart() {
-        return cart;
-    }
-
-    public Map<String, String> getShipping() {
-        return shipping;
-    }
-
-    public Map<String, String> getPayment() { return payment; }
 
     @Override
-    public void addCart(CartDaoMem cart) {
-        this.cart = cart;
+    public void add(Order order) {
+        orders.put(order.getUserId(), order);
     }
 
     @Override
-    public void addShipping(Map<String, String> shippingInfo) {
-        this.shipping = shippingInfo;
-    }
-
-    @Override
-    public void addPayment(Map<String, String> paymentInfo) {
-        this.payment = paymentInfo;
-        this.justOrdered = true;
+    public Order find(int userId) {
+        for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
+            if (entry.getKey() == userId) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 }

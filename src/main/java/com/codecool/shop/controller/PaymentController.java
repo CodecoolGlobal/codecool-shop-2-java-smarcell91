@@ -4,6 +4,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Payment;
 import com.codecool.shop.model.Product;
 
@@ -56,6 +57,7 @@ public class PaymentController extends HttpServlet {
                 payPalUserName != null && payPalPW != null) {
             Payment payment = new Payment(userId, payPalUserName, payPalPW);
             paymentDao.addPP(payment);
+            orderDataStore.add(new Order(userId, productIdsToString(cartDataStore.getCart(userId))));
 //            orderDataStore.toJSON();
             cartDataStore.setCart(userId);
             resp.sendRedirect("/");
@@ -65,8 +67,7 @@ public class PaymentController extends HttpServlet {
                 expiryDate != null && cardCode!= null) {
             Payment payment = new Payment(userId, cardNumber, cardHolder, expiryDate, cardCode);
             paymentDao.addCard(payment);
-//            orderDataStore.toJSON();
-
+            orderDataStore.add(new Order(userId, productIdsToString(cartDataStore.getCart(userId))));
             cartDataStore.setCart(userId);
             resp.sendRedirect("/");
         }
@@ -90,5 +91,13 @@ public class PaymentController extends HttpServlet {
             }
         }
         return prodMap;
+    }
+
+    public String productIdsToString(List<Product> products) {
+        String result = "";
+        for (int i=0; i < products.size(); i++) {
+            result += i == 0 ? products.get(i).getId() : ", " + products.get(i).getId();
+        }
+        return result;
     }
 }
