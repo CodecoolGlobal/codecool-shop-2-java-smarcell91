@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import com.codecool.shop.dao.BillingDao;
 import com.codecool.shop.model.Billing;
+import com.codecool.shop.service.ErrorLogger;
 
 public class BillingDaoJdbc implements BillingDao {
     private DataSource dataSource;
@@ -33,7 +34,8 @@ public class BillingDaoJdbc implements BillingDao {
             rs.next();
             billing.setId(rs.getInt(1));
         } catch (SQLException e) {
-            throw new RuntimeException("Error while adding new billing", e);
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while adding billing info: " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 
@@ -51,6 +53,7 @@ public class BillingDaoJdbc implements BillingDao {
             billing.setId(rs.getInt(1));
             return billing;
         } catch (SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while searching for billing info with user id " + userId + ": " + e.toString());
             throw new RuntimeException("Error while searching for billing", e);
         }
     }
@@ -63,6 +66,7 @@ public class BillingDaoJdbc implements BillingDao {
             ps.setInt(1, id);
             ps.executeQuery();
         } catch (SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while removing billing info with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while removing billing", e);
         }
     }
@@ -79,6 +83,7 @@ public class BillingDaoJdbc implements BillingDao {
             st.setInt(5, billing.getUserId());
             st.executeUpdate();
         } catch (SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while updating billing info with user id " + billing.getUserId() + ": " + e.toString());
             throw new RuntimeException("Error while updating new shipping", e);
         }
     }

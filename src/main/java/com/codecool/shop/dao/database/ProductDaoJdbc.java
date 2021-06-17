@@ -4,6 +4,8 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.service.ErrorLogger;
+
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -37,6 +39,7 @@ public class ProductDaoJdbc implements ProductDao {
             rs.next();
             product.setId(rs.getInt(1));
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductDaoJdbc.class, "Error while adding product: " + e.toString());
             throw new RuntimeException("Error while adding new product", e);
         }
     }
@@ -55,6 +58,7 @@ public class ProductDaoJdbc implements ProductDao {
             product.setId(id);
             return product;
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductDaoJdbc.class, "Error while searching for product with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while searching for product", e);
         }
     }
@@ -75,6 +79,7 @@ public class ProductDaoJdbc implements ProductDao {
 //            System.out.println("ITTTTTT" + product.getName());
             return productList;
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductDaoJdbc.class, "Error while getting all products: " + e.toString());
             throw new RuntimeException("Error while getting all products", e);
         }
     }
@@ -87,6 +92,7 @@ public class ProductDaoJdbc implements ProductDao {
             ps.setInt(1, id);
             ps.executeQuery();
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductDaoJdbc.class, "Error while removing product with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while removing product", e);
       }
     }
@@ -106,6 +112,7 @@ public class ProductDaoJdbc implements ProductDao {
             }
             return productList;
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductDaoJdbc.class, "Error while getting products by supplier: " + e.toString());
             throw new RuntimeException("Error while searching for product", e);
         }
     }
@@ -125,6 +132,7 @@ public class ProductDaoJdbc implements ProductDao {
             }
             return productList;
         } catch (SQLException e) {
+            ErrorLogger.logError(ShippingDaoJdbc.class, "Error while getting products by category: " + e.toString());
             throw new RuntimeException("Error while searching for product", e);
         }
     }

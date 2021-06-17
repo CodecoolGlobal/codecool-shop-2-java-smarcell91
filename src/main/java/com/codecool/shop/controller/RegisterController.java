@@ -12,17 +12,13 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.DaoManager;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.SendEmail;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
-import java.util.Properties;
 
-import java.util.*;
 import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
 
 @WebServlet(name = "registerController", urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
@@ -37,6 +33,12 @@ public class RegisterController extends HttpServlet {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        try {
+            SendEmail.sendMail(email);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
 //        String password = hashPassword(request.getParameter("password"));
         User user = new User(firstName, lastName, email, password, salt);
         userDao.add(user);
@@ -58,24 +60,6 @@ public class RegisterController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             return "";
-        }
-    }
-
-    public static void sendEmail(String email) {    
-        String from = "codecoolshop.daniexpress@gmail.com";
-        String host = "localhost";
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", host);
-        Session session = Session.getDefaultInstance(properties);
-        try {
-           MimeMessage message = new MimeMessage(session);
-           message.setFrom(new InternetAddress(from));
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-           message.setSubject("Welcome to DaniExpress");
-           message.setText("Welcome to DaniExpress! Thank you for your registration! Have a cookie 🍪");
-           Transport.send(message);
-        } catch (MessagingException mex) {
-           mex.printStackTrace();
         }
     }
 }

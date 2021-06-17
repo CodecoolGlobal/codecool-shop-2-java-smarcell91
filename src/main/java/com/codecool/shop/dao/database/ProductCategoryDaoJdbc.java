@@ -2,6 +2,8 @@ package com.codecool.shop.dao.database;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.service.ErrorLogger;
+
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -33,6 +35,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             rs.next();
             productCategory.setId(rs.getInt(1));
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductCategoryDaoJdbc.class, "Error while adding new product category: " + e.toString());
             throw new RuntimeException("Error while adding new product category", e);
         }
     }
@@ -51,6 +54,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             productCategory.setId(id);
             return productCategory;
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductCategoryDaoJdbc.class, "Error while searching for product category with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while searching for product category", e);
         }
     }
@@ -68,6 +72,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             }
             return productCategoryList;
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductCategoryDaoJdbc.class, "Error while getting all product categories: " + e.toString());
             throw new RuntimeException("Error while getting all product categories", e);
         }
     }
@@ -80,6 +85,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             ps.setInt(1, id);
             ps.executeQuery();
         } catch (SQLException e) {
+            ErrorLogger.logError(ProductCategoryDaoJdbc.class, "Error while removing product category with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while removing product category", e);
       }
     }

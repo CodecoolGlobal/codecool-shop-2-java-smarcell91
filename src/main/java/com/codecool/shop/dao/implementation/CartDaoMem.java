@@ -1,10 +1,8 @@
 package com.codecool.shop.dao.implementation;
 
+import com.codecool.shop.service.ErrorLogger;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.Product;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,13 +10,12 @@ import java.util.List;
 
 public class CartDaoMem implements CartDao {
 
-//    private static Logger logger = LoggerFactory.getLogger(CartDaoMem.class);
     private Map<Integer, List<Product>> cart = new HashMap<Integer, List<Product>>();
     private static CartDaoMem instance = null;
-
+    
     private CartDaoMem() {
     }
-
+    
     public static CartDaoMem getInstance() {
         if (instance == null) {
             instance = new CartDaoMem();
@@ -47,9 +44,6 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void add(Product product, int userId) {
-//        logger.info("This is an information message");
-//        logger.error("this is a error message");
-//        logger.warn("this is a warning message");
         if (cart.containsKey(userId)) {
             for (Map.Entry<Integer, List<Product>> entry : cart.entrySet()) {
                 if (entry.getKey() == userId) {
@@ -122,5 +116,4 @@ public class CartDaoMem implements CartDao {
             }
         }
     }
-
 }

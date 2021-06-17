@@ -3,6 +3,7 @@ package com.codecool.shop.dao.database;
 import com.codecool.shop.dao.PaymentDao;
 import com.codecool.shop.model.Payment;
 import com.codecool.shop.model.Shipping;
+import com.codecool.shop.service.ErrorLogger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -27,7 +28,8 @@ public class PaymentDaoJdbc implements PaymentDao {
             st.setString(5, payment.getCardCode());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error while adding new shipping", e);
+            ErrorLogger.logError(PaymentDaoJdbc.class, "Error while adding payment info: " + e.toString());
+            throw new RuntimeException("Error while adding new payment info", e);
         }
     }
 
@@ -41,7 +43,8 @@ public class PaymentDaoJdbc implements PaymentDao {
             st.setString(3, payment.getPPPassword());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error while adding new shipping", e);
+            ErrorLogger.logError(PaymentDaoJdbc.class, "Error while adding payment info: " + e.toString());
+            throw new RuntimeException("Error while adding new payment info", e);
         }
     }
 
@@ -58,7 +61,8 @@ public class PaymentDaoJdbc implements PaymentDao {
             Payment payment = new Payment(rs.getInt(1), rs.getInt(2), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
             return payment;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while searching for shipping", e);
+            ErrorLogger.logError(PaymentDaoJdbc.class, "Error while searching for payment info with user id " + userId + ": " + e.toString());
+            throw new RuntimeException("Error while searching for payment info", e);
         }
     }
 }

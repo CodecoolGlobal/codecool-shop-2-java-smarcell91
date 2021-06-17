@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import com.codecool.shop.dao.ShippingDao;
 import com.codecool.shop.model.Shipping;
+import com.codecool.shop.service.ErrorLogger;
 
 public class ShippingDaoJdbc implements ShippingDao {
     private DataSource dataSource;
@@ -33,6 +34,7 @@ public class ShippingDaoJdbc implements ShippingDao {
             rs.next();
             shipping.setId(rs.getInt(1));
         } catch (SQLException e) {
+            ErrorLogger.logError(ShippingDaoJdbc.class, "Error while adding new shipping: " + e.toString());
             throw new RuntimeException("Error while adding new shipping", e);
         }
     }
@@ -51,6 +53,7 @@ public class ShippingDaoJdbc implements ShippingDao {
             shipping.setId(rs.getInt(1));
             return shipping;
         } catch (SQLException e) {
+            ErrorLogger.logError(ShippingDaoJdbc.class, "Error while searching for shipping with user id " + userId + ": " + e.toString());
             throw new RuntimeException("Error while searching for shipping", e);
         }
     }
@@ -63,6 +66,7 @@ public class ShippingDaoJdbc implements ShippingDao {
             ps.setInt(1, id);
             ps.executeQuery();
         } catch (SQLException e) {
+            ErrorLogger.logError(ShippingDaoJdbc.class, "Error while removing shipping with id " + id + ": " + e.toString());
             throw new RuntimeException("Error while removing shipping", e);
       }
     }
@@ -79,6 +83,7 @@ public class ShippingDaoJdbc implements ShippingDao {
             st.setInt(5, shipping.getUserId());
             st.executeUpdate();
         } catch (SQLException e) {
+            ErrorLogger.logError(ShippingDaoJdbc.class, "Error while updating shipping: " + e.toString());
             throw new RuntimeException("Error while updating new shipping", e);
         }
     }

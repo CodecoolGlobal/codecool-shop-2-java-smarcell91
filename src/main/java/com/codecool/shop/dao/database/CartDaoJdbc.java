@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.User;
+import com.codecool.shop.service.ErrorLogger;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -27,6 +28,7 @@ public class CartDaoJdbc implements CartDao {
             String table = "CREATE TABLE cart"+userId+"(product_id INT)";
             st.executeUpdate(table);
         } catch (SQLException throwables) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while creating and adding new table: " + throwables.toString());
             throw new RuntimeException("Error ", throwables);
         }
     }
@@ -38,6 +40,7 @@ public class CartDaoJdbc implements CartDao {
             String sql = "INSERT INTO cart"+userId+"(product_id) VALUES ("+product.getId()+")";
             st.executeUpdate(sql);
         } catch (SQLException throwables) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while adding " + product.getName() +  " product to cart: " + throwables.toString());
             throw new RuntimeException("Error while adding "+product.getId()+" product to cart"+userId+" cart.", throwables);
         }
     }
@@ -57,6 +60,7 @@ public class CartDaoJdbc implements CartDao {
             product.setId(productId);
             return product;
         } catch (SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while searching for product with id " + productId + ": " + e.toString());
             throw new RuntimeException("Error while reading product", e);
         }
     }
@@ -80,7 +84,8 @@ public class CartDaoJdbc implements CartDao {
             st.setInt(2, productId);
             st.executeUpdate();
         } catch(SQLException e) {
-            System.out.println(e);
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while removing product with id " + productId + ": " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 
@@ -92,7 +97,8 @@ public class CartDaoJdbc implements CartDao {
             st.setString(1, "cart"+userId);
             st.executeUpdate();
         } catch(SQLException e) {
-            System.out.println(e);
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while decrementing amount of product with id " + productId + ": " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 
@@ -110,18 +116,21 @@ public class CartDaoJdbc implements CartDao {
             }
             return result;
         } catch (SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while searching for cart with user id " + userId + ": " + e.toString());
             throw new RuntimeException("Error while reading", e);
         }
     }
 
     @Override
     public void setCart(int userId) {
-        try (Connection conn = dataSource.getConnection()) {
-            Statement st = conn.createStatement();
-            String sql = "DELETE FROM cart"+userId;
-            st.executeUpdate(sql);
-        } catch (SQLException throwables) {
-            throw new RuntimeException("Error ", throwables);
+        try (Connection c = dataSource.getConnection()){
+            String sql = "DROP TABLE ?";
+            PreparedStatement st = c.prepareStatement(sql);
+            st.setString(1, "cart"+userId);
+            st.executeUpdate();
+        } catch(SQLException e) {
+            ErrorLogger.logError(CartDaoJdbc.class, "Error while dropping table cart" + userId + ": " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 }
