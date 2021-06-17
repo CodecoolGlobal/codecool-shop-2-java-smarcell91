@@ -21,13 +21,21 @@ public class CartDaoJdbc implements CartDao {
     }
 
     @Override
+    public void addTable(int userId) {
+        try (Connection conn = dataSource.getConnection()) {
+            Statement st = conn.createStatement();
+            String table = "CREATE TABLE cart"+userId+"(product_id INT)";
+            st.executeUpdate(table);
+        } catch (SQLException throwables) {
+            throw new RuntimeException("Error ", throwables);
+        }
+    }
+
+    @Override
     public void add(Product product, int userId) {
         try (Connection conn = dataSource.getConnection()) {
-            String table = "create table IF NOT EXISTS cart"+userId+" (" + "product_id INT," +")";
-
             String sql = "INSERT INTO ?(product_id) VALUES (?)";
             PreparedStatement st = conn.prepareStatement(sql);
-            st.execute(table);
             st.setString(1, "cart"+userId);
             st.setInt(2, product.getId());
             st.executeUpdate();
@@ -51,7 +59,7 @@ public class CartDaoJdbc implements CartDao {
             product.setId(productId);
             return product;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading all players", e);
+            throw new RuntimeException("Error while reading product", e);
         }
     }
 
@@ -93,27 +101,18 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public List<Product> getCart(int userId) {
         try (Connection c = dataSource.getConnection()) {
-            String sql = """
-                SELECT 
-                products.name, products.description, default_price, category_id, supplier_id, currency, categories.name, categories.description, categories.department, suppliers.name, suppliers.description 
-                FROM ? cart 
-                JOIN products ON cart.product_id = products.id
-                JOIN categories ON products.category_id = categories.id 
-                JOIN suppliers ON products.supplier_id = suppliers.id 
-                WHERE products.id = ?""";
-            PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, "cart"+userId);
-            ResultSet rs = ps.executeQuery();
+            String sql = "SELECT products.id, products.name, products.description, default_price, category_id, supplier_id, currency, categories.name, categories.description, categories.department, suppliers.name, suppliers.description FROM cart"+userId+" cart JOIN products ON cart.product_id = products.id JOIN categories ON products.category_id = categories.id JOIN suppliers ON products.supplier_id = suppliers.id";
+            ResultSet rs = c.createStatement().executeQuery(sql);
             List<Product> result = new ArrayList<>();
             while (rs.next()) { // while result set pointer is positioned before or on last row read authors
                 // get product by id and create a product object
-                Product product = new Product(rs.getString(1), rs.getFloat(3), rs.getString(6), rs.getString(2), new ProductCategory(rs.getString(7), rs.getString(9), rs.getString(8)), new Supplier(rs.getString(10), rs.getString(11)));
+                Product product = new Product(rs.getString(2), rs.getFloat(4), rs.getString(7), rs.getString(3), new ProductCategory(rs.getString(8), rs.getString(10), rs.getString(9)), new Supplier(rs.getString(11), rs.getString(12)));
                 product.setId(rs.getInt(1));
                 result.add(product);
             }
             return result;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading all players", e);
+            throw new RuntimeException("Error while reading", e);
         }
     }
 

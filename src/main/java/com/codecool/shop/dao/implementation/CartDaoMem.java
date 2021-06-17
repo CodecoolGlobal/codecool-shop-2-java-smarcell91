@@ -26,6 +26,13 @@ public class CartDaoMem implements CartDao {
         return instance;
     }
 
+    @Override
+    public void addTable(int userId) {
+        List<Product> userCart = new ArrayList<>();
+        cart.put(userId, userCart);
+    }
+
+    @Override
     public float getPriceSum(int userId) {
         float maxSum = 0;
         for (Map.Entry<Integer, List<Product>> entry : cart.entrySet()) {

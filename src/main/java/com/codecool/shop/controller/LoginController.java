@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         String passwordInput = request.getParameter("password");
         User user = userDao.find(emailInput);
         if (user != null) {
-            if (hashPassword(passwordInput).equals(user.getPwHash())) {
+            if (passwordInput.equals(user.getPwHash())) {
                 isCorrectUser = true;
             } else {
                 missedPassword = true;
@@ -46,7 +46,7 @@ public class LoginController extends HttpServlet {
         session.setAttribute("loggedIn", isCorrectUser);
         session.setAttribute("email", emailInput);
         session.setAttribute("missedPassword", missedPassword);
-
+        session.setAttribute("userId", userDao.find(emailInput).getId());
         response.sendRedirect(request.getContextPath());
     }
 

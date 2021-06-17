@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.DaoManager;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.User;
@@ -27,6 +28,7 @@ import javax.activation.*;
 public class RegisterController extends HttpServlet {
     private DaoManager daoManager = DaoManager.getInstance();
     private UserDao userDao = daoManager.getUserDao();
+    private CartDao cartDao = daoManager.getCartDao();
     private String salt = "";
 
     @Override
@@ -34,9 +36,12 @@ public class RegisterController extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
-        String password = hashPassword(request.getParameter("password"));
+        String password = request.getParameter("password");
+//        String password = hashPassword(request.getParameter("password"));
         User user = new User(firstName, lastName, email, password, salt);
         userDao.add(user);
+        int userId = userDao.find(email).getId();
+        cartDao.addTable(userId);
         response.sendRedirect(request.getContextPath());
     }
 

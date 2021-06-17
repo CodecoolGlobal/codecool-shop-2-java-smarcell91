@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CartDao {
+    void addTable(int userId);
     void add(Product product, int userId);
     Product find(int productId, int userId);
     void remove(int productId, int userId);
