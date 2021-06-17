@@ -50,11 +50,10 @@
     </div>
     <hr>
     <div class="shippingInfo">
-        <span><h4>Name:</h4><h3 th:text="${shipping.firstName} + ' ' + ${shipping.lastName}"></h3></span>
-        <span><h4>Email:</h4><h3 th:text="${shipping.email}"></h3></span>
-        <span><h4>Phone number:</h4><h3 th:text="${shipping.phone}"></h3></span>
-        <span><h4>Address:</h4><h3 th:text="${shipping.shippingCountry} + ' ' + ${shipping.shippingCity} + ' ' +
-                ${shipping.shippingZipcode} + ' ' + ${shipping.shippingZipcode} + ' ' + ${shipping.shippingAddress}"></h3></span>
+        <span><h4>Name:</h4><h3 th:text="${user.firstName} + ' ' + ${user.lastName}"></h3></span>
+        <span><h4>Email:</h4><h3 th:text="${user.email}"></h3></span>
+        <span><h4>Address:</h4><h3 th:text="${shipping.country} + ' ' + ${shipping.city} + ' '
+                  + ${shipping.zipcode} + ' ' + ${shipping.address}"></h3></span>
     </div>
     <hr>
     <div class="inputFields">

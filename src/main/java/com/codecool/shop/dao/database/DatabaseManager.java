@@ -15,6 +15,7 @@ public class DatabaseManager {
     private CartDao cartDao;
     private BillingDao billingDao;
     private ShippingDao shippingDao;
+    private PaymentDao paymentDao;
 
     public DatabaseManager (String database, String user, String password) throws SQLException {
         DataSource dataSource = connect(database, user, password);
@@ -26,6 +27,7 @@ public class DatabaseManager {
         cartDao = new CartDaoJdbc(dataSource);
         billingDao = new BillingDaoJdbc(dataSource);
         shippingDao = new ShippingDaoJdbc(dataSource);
+        paymentDao = new PaymentDaoJdbc(dataSource);
     }
 
     public OrderDao getOrderDao() {
@@ -59,6 +61,8 @@ public class DatabaseManager {
     public ShippingDao getShippingDao() {
         return shippingDao;
     }
+
+    public PaymentDao getPaymentDao() { return paymentDao; }
 
     private DataSource connect(String database, String user, String password) throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();

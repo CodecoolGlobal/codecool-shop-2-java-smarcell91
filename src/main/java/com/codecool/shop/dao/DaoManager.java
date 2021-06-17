@@ -21,6 +21,8 @@ public class DaoManager {
     private CartDao cartDao;
     private BillingDao billingDao;
     private ShippingDao shippingDao;
+    private PaymentDao paymentDao;
+
     private static DaoManager instance = null;
 
     private DaoManager() {
@@ -51,6 +53,7 @@ public class DaoManager {
                 cartDao = dbManager.getCartDao();
                 billingDao = dbManager.getBillingDao();
                 shippingDao = dbManager.getShippingDao();
+                paymentDao = dbManager.getPaymentDao();
             }
             else {
                 orderDao = OrderDaoMem.getInstance();
@@ -61,6 +64,7 @@ public class DaoManager {
                 cartDao = CartDaoMem.getInstance();
                 billingDao = BillingDaoMem.getInstance();
                 shippingDao = ShippingDaoMem.getInstance();
+                paymentDao = PaymentDaoMem.getInstance();
             }
         }
         catch (Exception e) {
@@ -99,4 +103,6 @@ public class DaoManager {
     public ShippingDao getShippingDao() {
         return shippingDao;
     }
+
+    public PaymentDao getPaymentDao() { return paymentDao; }
 }

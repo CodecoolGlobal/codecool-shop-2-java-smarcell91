@@ -1,11 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.DaoManager;
-import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
+import com.codecool.shop.model.Payment;
 import com.codecool.shop.model.Product;
 
 import org.thymeleaf.TemplateEngine;
@@ -35,6 +34,9 @@ public class PaymentController extends HttpServlet {
         DaoManager daoManager = DaoManager.getInstance();
         CartDao cartDataStore = daoManager.getCartDao();
         OrderDao orderDataStore = daoManager.getOrderDao();
+        UserDao userDao = daoManager.getUserDao();
+        ShippingDao shippingDao = daoManager.getShippingDao();
+        PaymentDao paymentDao = daoManager.getPaymentDao();
 
         String payPalUserName = req.getParameter("payPalUsername");
         String payPalPW = req.getParameter("payPalPW");
@@ -52,10 +54,8 @@ public class PaymentController extends HttpServlet {
 
         if (Objects.equals(payPalCheckbox, "on") && cardCheckbox == null &&
                 payPalUserName != null && payPalPW != null) {
-            Map<String, String> paymentInfo = new HashMap<>();
-            paymentInfo.put("payPalUserName", payPalUserName);
-            paymentInfo.put("payPalPW", payPalPW);
-            orderDataStore.addPayment(paymentInfo);
+            Payment payment = new Payment(userId, payPalUserName, payPalPW);
+            paymentDao.addPP(payment);
 //            orderDataStore.toJSON();
             cartDataStore.setCart(userId);
             resp.sendRedirect("/");
@@ -63,12 +63,8 @@ public class PaymentController extends HttpServlet {
         else if (Objects.equals(cardCheckbox, "on") && payPalCheckbox == null &&
                 cardNumber != null && cardHolder != null &&
                 expiryDate != null && cardCode!= null) {
-            Map<String, String> paymentInfo = new HashMap<>();
-            paymentInfo.put("cardNumber", cardNumber);
-            paymentInfo.put("cardHolder", cardHolder);
-            paymentInfo.put("expiryDate", expiryDate);
-            paymentInfo.put("cardCode", cardCode);
-            orderDataStore.addPayment(paymentInfo);
+            Payment payment = new Payment(userId, cardNumber, cardHolder, expiryDate, cardCode);
+            paymentDao.addCard(payment);
 //            orderDataStore.toJSON();
 
             cartDataStore.setCart(userId);
@@ -76,6 +72,8 @@ public class PaymentController extends HttpServlet {
         }
         else {
 //            context.setVariable("shipping", orderDataStore.getShipping());
+            context.setVariable("user", userDao.find(userId));
+            context.setVariable("shipping", shippingDao.find(userId));
             context.setVariable("priceSum", cartDataStore.getPriceSum(userId));
             context.setVariable("cart", sumOfProducts(cartDataStore.getCart(userId)));
             engine.process("product/payment.html", context, resp.getWriter());

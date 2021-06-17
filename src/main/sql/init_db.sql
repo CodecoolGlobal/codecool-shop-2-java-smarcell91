@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS public.carts;
 CREATE TABLE carts (
     id serial NOT NULL PRIMARY KEY,
     user_id int,
-    product_id int[]
+    product_id int
 );
 
 DROP TABLE IF EXISTS public.billing;
@@ -43,6 +43,18 @@ CREATE TABLE shipping (
     city text,
     zipcode int,
     address text
+);
+
+DROP TABLE IF EXISTS public.payment;
+CREATE TABLE payment (
+      id serial NOT NULL PRIMARY KEY,
+      user_id int,
+      PP_user text,
+      PP_password text,
+      card_number text,
+      card_holder text,
+      card_date text,
+      card_code text
 );
 
 DROP TABLE IF EXISTS public.suppliers;
