@@ -1,6 +1,9 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.DaoManager;
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.model.Product;
@@ -13,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,8 +32,9 @@ public class PaymentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartDaoMem cartDataStore = CartDaoMem.getInstance();
-        OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
+        DaoManager daoManager = DaoManager.getInstance();
+        CartDao cartDataStore = daoManager.getCartDao();
+        OrderDao orderDataStore = daoManager.getOrderDao();
 
         String payPalUserName = req.getParameter("payPalUsername");
         String payPalPW = req.getParameter("payPalPW");
@@ -41,7 +47,8 @@ public class PaymentController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
+        HttpSession session = req.getSession();
+        int userId = Integer.parseInt(session.getAttribute("userId").toString());
 
         if (Objects.equals(payPalCheckbox, "on") && cardCheckbox == null &&
                 payPalUserName != null && payPalPW != null) {
@@ -49,9 +56,8 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("payPalUserName", payPalUserName);
             paymentInfo.put("payPalPW", payPalPW);
             orderDataStore.addPayment(paymentInfo);
-            orderDataStore.toJSON();
-            Map<Product, Integer> newCart = new HashMap<>();
-            cartDataStore.setCart(newCart);
+//            orderDataStore.toJSON();
+            cartDataStore.setCart(userId);
             resp.sendRedirect("/");
         }
         else if (Objects.equals(cardCheckbox, "on") && payPalCheckbox == null &&
@@ -63,15 +69,15 @@ public class PaymentController extends HttpServlet {
             paymentInfo.put("expiryDate", expiryDate);
             paymentInfo.put("cardCode", cardCode);
             orderDataStore.addPayment(paymentInfo);
-            orderDataStore.toJSON();
-            Map<Product, Integer> newCart = new HashMap<>();
-            cartDataStore.setCart(newCart);
+//            orderDataStore.toJSON();
+
+            cartDataStore.setCart(userId);
             resp.sendRedirect("/");
         }
         else {
-            context.setVariable("shipping", orderDataStore.getShipping());
-            context.setVariable("priceSum", cartDataStore.getPriceSum());
-            context.setVariable("cart", cartDataStore.getCart());
+//            context.setVariable("shipping", orderDataStore.getShipping());
+            context.setVariable("priceSum", cartDataStore.getPriceSum(userId));
+            context.setVariable("cart", cartDataStore.getCart(userId));
             engine.process("product/payment.html", context, resp.getWriter());
         }
     }

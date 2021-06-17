@@ -14,8 +14,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderDaoMem implements OrderDao {
-    public boolean justOrdered = false;
+public class OrderDaoMem implements OrderDao{
+    private boolean justOrdered = false;
     CartDaoMem cart;
     private Map<String, String> shipping = new HashMap<>();
     private Map<String, String> payment = new HashMap<>();
@@ -45,6 +45,16 @@ public class OrderDaoMem implements OrderDao {
 //    public void sendEmail() {
 //
 //    }
+
+    @Override
+    public boolean isJustOrdered() {
+        return justOrdered;
+    }
+
+    @Override
+    public void setJustOrdered(boolean justOrdered) {
+        this.justOrdered = justOrdered;
+    }
 
     public CartDaoMem getCart() {
         return cart;

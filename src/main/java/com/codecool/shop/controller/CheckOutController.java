@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class CheckOutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        int userId = Integer.parseInt(session.getAttribute("userId").toString());
         CartDaoMem cartDataStore = CartDaoMem.getInstance();
         OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
 
@@ -63,7 +66,7 @@ public class CheckOutController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("cart", cartDataStore.getCart());
+        context.setVariable("cart", cartDataStore.getCart(userId));
 
         engine.process("product/checkout.html", context, resp.getWriter());
     }

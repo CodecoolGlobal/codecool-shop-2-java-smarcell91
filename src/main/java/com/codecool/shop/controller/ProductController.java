@@ -1,8 +1,6 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -16,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +25,13 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        CartDaoMem cartDaoMem = CartDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        DaoManager daoManager = DaoManager.getInstance();
+        ProductDao productDataStore = daoManager.getProductDao();
+        CartDao cartDaoMem = daoManager.getCartDao();
+        ProductCategoryDao productCategoryDataStore = daoManager.getProductCategoryDao();
+        SupplierDao supplierDataStore = daoManager.getSupplierDao();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
-        OrderDaoMem orderDataStore = OrderDaoMem.getInstance();
+        OrderDao orderDataStore = daoManager.getOrderDao();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -105,17 +105,21 @@ public class ProductController extends HttpServlet {
             context.setVariable("category", category);
 
         }
-        context.setVariable("justOrdered", orderDataStore.justOrdered);
+        context.setVariable("justOrdered", orderDataStore.isJustOrdered());
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("suppliers", supplierDataStore.getAll());
-        var cart = cartDaoMem.getCart();
-        context.setVariable("cartsize", cart.size());
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userId") != null) {
+            int userId = Integer.parseInt(session.getAttribute("userId").toString());
+            var cart = cartDaoMem.getCart(userId);
+            context.setVariable("cartsize", cart.size());
+        }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));
         // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         // context.setVariables(params);
-        orderDataStore.justOrdered = false;
+        orderDataStore.setJustOrdered(false);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
